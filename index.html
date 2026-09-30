@@ -9,7 +9,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="For You ❤️">
-  <link rel="apple-touch-icon" href="https://via.placeholder.com/192/ff3b30/ffffff?text=%E2%9D%A4%EF%B8%8F">
+  <link rel="apple-touch-icon" href="https://img.icons8.com/emoji/512/red-heart.png">
 
   <!-- Canvas Confetti Library -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -608,7 +608,8 @@
 
     setInterval(updateUI, 1000);
 
-    // PWA Setup
+  
+   // PWA Setup
     const manifest = {
       "name": "For You ❤️",
       "short_name": "For You",
@@ -617,10 +618,11 @@
       "background_color": "#ff9a9e",
       "theme_color": "#ff2a55",
       "icons": [{
-        "src": "https://via.placeholder.com/192/ff2a55/ffffff?text=%E2%9D%A4%EF%B8%8F",
-        "sizes": "192x192",
+        "src": "https://img.icons8.com/emoji/512/red-heart.png",
+        "sizes": "512x512",
         "type": "image/png"
       }]
+    };
     };
     const manifestBlob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
     const manifestLink = document.createElement('link');
