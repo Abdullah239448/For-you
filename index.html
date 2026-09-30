@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>For You ❤️</title>
 
   <!-- iOS PWA Meta Tags -->
@@ -10,6 +10,9 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="For You ❤️">
   <link rel="apple-touch-icon" href="https://via.placeholder.com/192/ff3b30/ffffff?text=%E2%9D%A4%EF%B8%8F">
+
+  <!-- Canvas Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <style>
     * {
@@ -20,15 +23,21 @@
       -webkit-tap-highlight-color: transparent;
     }
 
+    html, body {
+      width: 100%;
+      height: 100%;
+      height: 100dvh;
+      overflow: hidden;
+      position: fixed;
+      touch-action: manipulation;
+    }
+
     body {
       background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #feada6 100%);
-      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px;
-      overflow: hidden;
-      position: relative;
+      padding: 16px;
     }
 
     /* Floating Background Hearts */
@@ -61,62 +70,81 @@
       }
     }
 
-    /* Glassmorphism Card Container */
+    /* Main Card Container */
     .card {
       position: relative;
       z-index: 10;
-      background: rgba(255, 255, 255, 0.72);
+      background: rgba(255, 255, 255, 0.82);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.6);
-      border-radius: 32px;
-      padding: 36px 24px 28px 24px;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      border-radius: 28px;
+      padding: 24px 20px;
       width: 100%;
-      max-width: 350px;
-      box-shadow: 0 20px 40px rgba(230, 80, 110, 0.2);
+      max-width: 360px;
+      box-shadow: 0 20px 40px rgba(230, 80, 110, 0.25);
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
+      max-height: 94dvh;
+      overflow-y: auto;
+    }
+
+    /* Top Navigation Tabs */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 20px;
     }
 
     .app-title {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 700;
-      letter-spacing: 2px;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
-      color: rgba(214, 40, 74, 0.7);
-      margin-bottom: 24px;
+      color: rgba(214, 40, 74, 0.8);
     }
 
-    /* Interactive Glow Button */
-    .button-wrapper {
-      position: relative;
-      margin-bottom: 28px;
+    .fav-btn {
+      background: rgba(255, 42, 85, 0.1);
+      border: 1px solid rgba(255, 42, 85, 0.2);
+      color: #ff2a55;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
 
+    /* Interactive Heart Button */
     .heart-btn {
       background: linear-gradient(135deg, #ff2a55 0%, #ff5e62 100%);
       color: #ffffff;
       border: none;
-      width: 170px;
-      height: 170px;
+      width: 140px;
+      height: 140px;
       border-radius: 50%;
-      font-size: 19px;
+      font-size: 17px;
       font-weight: 700;
       cursor: pointer;
-      line-height: 1.35;
-      padding: 20px;
+      line-height: 1.3;
+      padding: 16px;
       box-shadow: 0 10px 25px rgba(255, 42, 85, 0.4);
       transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       display: flex;
       align-items: center;
       justify-content: center;
+      margin-bottom: 20px;
     }
 
     .heart-btn:active {
       transform: scale(0.92);
-      box-shadow: 0 5px 12px rgba(255, 42, 85, 0.3);
     }
 
     .heart-btn:disabled {
@@ -126,70 +154,202 @@
       color: #8e8e93;
     }
 
-    /* Compliment Display Box with Smooth Pop Effect */
-    .compliment-container {
-      min-height: 100px;
+    /* Scratch-Off Container */
+    .scratch-wrapper {
+      position: relative;
       width: 100%;
+      height: 110px;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 12px;
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.03);
+    }
+
+    .compliment-text {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 12px 16px;
-      background: rgba(255, 255, 255, 0.5);
-      border-radius: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.8);
-      margin-bottom: 20px;
-    }
-
-    .compliment-text {
-      font-size: 17px;
+      font-size: 15px;
       font-weight: 600;
       color: #b8002e;
-      line-height: 1.45;
-      opacity: 1;
-      transform: translateY(0) scale(1);
-      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      line-height: 1.4;
+      text-align: center;
+      z-index: 1;
     }
 
-    .compliment-text.hidden {
-      opacity: 0;
-      transform: translateY(12px) scale(0.95);
+    canvas#scratchCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      cursor: pointer;
+      touch-action: none;
     }
 
-    /* Counter & Timer Footer */
-    .footer-info {
-      display: flex;
-      flex-direction: column;
+    /* Bookmark Action Bar */
+    .action-bar {
+      margin-bottom: 12px;
+      height: 28px;
+    }
+
+    .bookmark-btn {
+      background: none;
+      border: none;
+      color: #ff2a55;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: none;
+      align-items: center;
       gap: 4px;
     }
 
+    .footer-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
     .counter {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 600;
       color: rgba(60, 60, 67, 0.6);
     }
 
     .timer {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
       color: #ff2a55;
+    }
+
+    /* Favorites Modal */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-content {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 24px;
+      width: 100%;
+      max-width: 340px;
+      max-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ff2a55;
+    }
+
+    .close-btn {
+      background: #f2f2f7;
+      border: none;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .fav-list {
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-align: left;
+    }
+
+    .fav-item {
+      background: #fff0f3;
+      padding: 12px 14px;
+      border-radius: 14px;
+      font-size: 14px;
+      color: #b8002e;
+      font-weight: 500;
+      border-left: 3px solid #ff2a55;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .delete-fav-btn {
+      background: rgba(255, 42, 85, 0.15);
+      border: none;
+      color: #ff2a55;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .empty-favs {
+      text-align: center;
+      color: #8e8e93;
+      font-size: 14px;
+      padding: 20px 0;
     }
   </style>
 </head>
 <body>
 
-  <!-- Floating Hearts Background -->
   <div class="bg-hearts" id="bgHearts"></div>
 
-  <!-- Main App Card -->
   <div class="card">
-    <div class="app-title">Just For You</div>
-
-    <div class="button-wrapper">
-      <button class="heart-btn" id="loveBtn">Why I Love You ❤️</button>
+    <div class="top-bar">
+      <div class="app-title">Just For You</div>
+      <button class="fav-btn" id="openFavs">❤️ Saved (<span id="favCount">0</span>)</button>
     </div>
+
+    <button class="heart-btn" id="loveBtn">Why I Love You ❤️</button>
     
-    <div class="compliment-container">
-      <div class="compliment-text" id="displayBox">Tap the heart to start!</div>
+    <!-- Scratch-Off Card -->
+    <div class="scratch-wrapper">
+      <div class="compliment-text" id="displayBox">Tap the heart to unlock!</div>
+      <canvas id="scratchCanvas"></canvas>
+    </div>
+
+    <!-- Bookmark Action Bar -->
+    <div class="action-bar">
+      <button class="bookmark-btn" id="bookmarkBtn">❤️ Save to Favorites</button>
     </div>
     
     <div class="footer-info">
@@ -198,37 +358,52 @@
     </div>
   </div>
 
+  <!-- Favorites Modal -->
+  <div class="modal" id="favModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">Saved Hearts ❤️</div>
+        <button class="close-btn" id="closeFavs">✕</button>
+      </div>
+      <div class="fav-list" id="favList"></div>
+    </div>
+  </div>
+
   <script>
-    // -----------------------------------------------------------------
-    // EDIT YOUR COMPLIMENTS HERE
-    // -----------------------------------------------------------------
+    // Compliments Array - Add as many as you want!
     const compliments = [
       "Your laugh instantly brightens up my whole day.",
-      "You have the kindest and sweetest heart.",
+      "You have the kindest and sweetest heart in the world.",
       "I love how thoughtful you are with everyone around you.",
       "Being with you makes everything infinitely better.",
       "You make me smile without even trying.",
       "Your eyes light up whenever you get excited about something.",
       "You are my absolute favorite person to talk to.",
-      "I love how passionate you get about the things you care about.",
+      "I love how passionate you get about things you care about.",
       "You make even simple, ordinary days feel special.",
-      "You inspire me every single day."
+      "You inspire me every single day.",
+      "Whatever happens, I'm always in your corner.",
+      "You're cute even when you're mildly annoyed!"
     ];
 
     const MAX_VIEWS = 5;
-    const HOUR_IN_MS = 60 * 60 * 1000;
+    const HOUR_IN_MS = 0 * 60 * 1000;
+
+    let currentCompliment = '';
+    let lastUsedIndex = -1;
 
     const loveBtn = document.getElementById('loveBtn');
     const displayBox = document.getElementById('displayBox');
     const counterText = document.getElementById('counterText');
     const timerText = document.getElementById('timerText');
-    let lastUsedIndex = -1;
+    const bookmarkBtn = document.getElementById('bookmarkBtn');
+    const canvas = document.getElementById('scratchCanvas');
+    const ctx = canvas.getContext('2d');
 
-    // Create floating background hearts dynamically
+    // Setup Background Floating Hearts
     const bgHeartsContainer = document.getElementById('bgHearts');
     const heartSymbols = ['❤️', '💖', '✨', '💕'];
-    
-    for (let i = 0; i < 14; i++) {
+    for (let i = 0; i < 12; i++) {
       const heart = document.createElement('div');
       heart.className = 'bg-heart';
       heart.innerText = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
@@ -238,20 +413,77 @@
       bgHeartsContainer.appendChild(heart);
     }
 
-    // LocalStorage helper functions
-    function getStoredData() {
-      const data = localStorage.getItem('love_app_data');
-      return data ? JSON.parse(data) : { timestamps: [] };
+    // Canvas Pink & Red Heart-Pattern Sheet Setup
+    function initScratchCard(coverText = "Scratch Me! ✨") {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = rect.height;
+
+      // Pink & Red Pattern Base
+      const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+      gradient.addColorStop(0, '#ff4b72');
+      gradient.addColorStop(1, '#ff85a2');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Draw Pink & Red Heart Pattern Overlay
+      ctx.fillStyle = "rgba(255, 255, 255, 0.25)";
+      ctx.font = "16px sans-serif";
+      for (let x = 10; x < canvas.width; x += 32) {
+        for (let y = 20; y < canvas.height; y += 32) {
+          ctx.fillText("❤️", x, y);
+        }
+      }
+
+      // Front Label Text
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "bold 16px -apple-system, sans-serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.shadowColor = "rgba(0,0,0,0.2)";
+      ctx.shadowBlur = 4;
+      ctx.fillText(coverText, canvas.width / 2, canvas.height / 2);
+      ctx.shadowBlur = 0;
     }
 
-    function saveStoredData(timestamps) {
-      localStorage.setItem('love_app_data', JSON.stringify({ timestamps }));
+    // Scratching Interaction Logic
+    let isScratching = false;
+
+    function scratch(e) {
+      if (!isScratching) return;
+      const rect = canvas.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      const x = clientX - rect.left;
+      const y = clientY - rect.top;
+
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.beginPath();
+      ctx.arc(x, y, 22, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    canvas.addEventListener('mousedown', () => isScratching = true);
+    canvas.addEventListener('touchstart', () => isScratching = true);
+    window.addEventListener('mouseup', () => isScratching = false);
+    window.addEventListener('touchend', () => isScratching = false);
+    canvas.addEventListener('mousemove', scratch);
+    canvas.addEventListener('touchmove', scratch);
+
+    // Local Storage Helpers
+    function getStoredData() {
+      const data = localStorage.getItem('love_app_data');
+      return data ? JSON.parse(data) : { timestamps: [], favorites: [] };
+    }
+
+    function saveStoredData(data) {
+      localStorage.setItem('love_app_data', JSON.stringify(data));
     }
 
     function getValidTimestamps() {
       const now = Date.now();
       const { timestamps } = getStoredData();
-      return timestamps.filter(ts => now - ts < HOUR_IN_MS);
+      return (timestamps || []).filter(ts => now - ts < HOUR_IN_MS);
     }
 
     function getRandomCompliment() {
@@ -267,6 +499,7 @@
 
     function updateUI() {
       const validTimestamps = getValidTimestamps();
+      validTimestamps.sort((a, b) => a - b);
       const remaining = MAX_VIEWS - validTimestamps.length;
 
       if (remaining > 0) {
@@ -276,7 +509,6 @@
       } else {
         loveBtn.disabled = true;
         counterText.innerText = "0 / 5 available this hour";
-        
         const oldestClick = validTimestamps[0];
         const nextUnlock = oldestClick + HOUR_IN_MS;
         const msLeft = nextUnlock - Date.now();
@@ -285,32 +517,127 @@
           const minutes = Math.floor(msLeft / 60000);
           const seconds = Math.floor((msLeft % 60000) / 1000);
           timerText.innerText = `Next heart unlocks in ${minutes}m ${seconds}s`;
+        } else {
+          updateUI();
         }
       }
+
+      // Update Favorites Count
+      const { favorites = [] } = getStoredData();
+      document.getElementById('favCount').innerText = favorites.length;
     }
 
+    // Trigger Confetti & Haptics
+    function triggerCelebration() {
+      if (navigator.vibrate) {
+        navigator.vibrate([30, 50, 30]);
+      }
+      confetti({
+        particleCount: 35,
+        spread: 60,
+        origin: { y: 0.7 },
+        colors: ['#ff2a55', '#ff758c', '#ff7eb3']
+      });
+    }
+
+    // Main Button Click Handler
     loveBtn.addEventListener('click', () => {
       let validTimestamps = getValidTimestamps();
 
       if (validTimestamps.length < MAX_VIEWS) {
-        // Trigger smooth pop transition
-        displayBox.classList.add('hidden');
-        
-        setTimeout(() => {
-          displayBox.innerText = getRandomCompliment();
-          displayBox.classList.remove('hidden');
-        }, 200);
+        currentCompliment = getRandomCompliment();
+        displayBox.innerText = currentCompliment;
+
+        // Reset Scratch Canvas with pink/red heart pattern
+        initScratchCard("Scratch to Reveal! 🪙");
 
         validTimestamps.push(Date.now());
-        saveStoredData(validTimestamps);
+        const data = getStoredData();
+        data.timestamps = validTimestamps;
+        saveStoredData(data);
+
+        triggerCelebration();
+        updateUI();
+
+        bookmarkBtn.style.display = 'inline-flex';
+        bookmarkBtn.innerText = "❤️ Save to Favorites";
+      }
+    });
+
+    // Bookmark Handler
+    bookmarkBtn.addEventListener('click', () => {
+      if (!currentCompliment) return;
+      const data = getStoredData();
+      let favorites = data.favorites || [];
+
+      if (!favorites.includes(currentCompliment)) {
+        favorites.push(currentCompliment);
+        data.favorites = favorites;
+        saveStoredData(data);
+        bookmarkBtn.innerText = "✓ Saved!";
         updateUI();
       }
     });
 
-    setInterval(updateUI, 1000);
-    updateUI();
+    // Render Favorites List with Delete Buttons
+    function renderFavorites() {
+      const { favorites = [] } = getStoredData();
+      favList.innerHTML = '';
 
-    // Inline PWA Setup
+      if (favorites.length === 0) {
+        favList.innerHTML = '<div class="empty-favs">No saved compliments yet! Tap "Save to Favorites" when unlocking a compliment.</div>';
+      } else {
+        favorites.forEach((fav, index) => {
+          const item = document.createElement('div');
+          item.className = 'fav-item';
+          
+          const textSpan = document.createElement('span');
+          textSpan.innerText = fav;
+          
+          const deleteBtn = document.createElement('button');
+          deleteBtn.className = 'delete-fav-btn';
+          deleteBtn.innerText = '✕';
+          deleteBtn.onclick = () => removeFavorite(index);
+
+          item.appendChild(textSpan);
+          item.appendChild(deleteBtn);
+          favList.appendChild(item);
+        });
+      }
+    }
+
+    function removeFavorite(indexToRemove) {
+      const data = getStoredData();
+      let favorites = data.favorites || [];
+      favorites.splice(indexToRemove, 1);
+      data.favorites = favorites;
+      saveStoredData(data);
+      renderFavorites();
+      updateUI();
+    }
+
+    // Favorites Modal Handlers
+    const favModal = document.getElementById('favModal');
+    const favList = document.getElementById('favList');
+
+    document.getElementById('openFavs').addEventListener('click', () => {
+      renderFavorites();
+      favModal.style.display = 'flex';
+    });
+
+    document.getElementById('closeFavs').addEventListener('click', () => {
+      favModal.style.display = 'none';
+    });
+
+    // Initial setup
+    window.addEventListener('load', () => {
+      initScratchCard("Tap Above First!");
+      updateUI();
+    });
+
+    setInterval(updateUI, 1000);
+
+    // PWA Manifest and Service Worker
     const manifest = {
       "name": "For You ❤️",
       "short_name": "For You",
