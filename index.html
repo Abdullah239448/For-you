@@ -154,46 +154,35 @@
       color: #8e8e93;
     }
 
-    /* Scratch-Off Container */
-    .scratch-wrapper {
-      position: relative;
+    /* Direct Compliment Box */
+    .compliment-container {
+      min-height: 100px;
       width: 100%;
-      height: 110px;
-      border-radius: 20px;
-      overflow: hidden;
-      margin-bottom: 12px;
-      background: rgba(255, 255, 255, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.9);
-      box-shadow: inset 0 2px 6px rgba(0,0,0,0.03);
-    }
-
-    .compliment-text {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 12px 16px;
-      font-size: 15px;
-      font-weight: 600;
-      color: #b8002e;
-      line-height: 1.4;
-      text-align: center;
-      z-index: 1;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      margin-bottom: 12px;
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.02);
     }
 
-    canvas#scratchCanvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 2;
-      cursor: pointer;
-      touch-action: none;
+    .compliment-text {
+      font-size: 16px;
+      font-weight: 600;
+      color: #b8002e;
+      line-height: 1.45;
+      text-align: center;
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .compliment-text.hidden {
+      opacity: 0;
+      transform: translateY(10px) scale(0.95);
     }
 
     /* Bookmark Action Bar */
@@ -341,10 +330,9 @@
 
     <button class="heart-btn" id="loveBtn">Why I Love You ❤️</button>
     
-    <!-- Scratch-Off Card -->
-    <div class="scratch-wrapper">
+    <!-- Compliment Container -->
+    <div class="compliment-container">
       <div class="compliment-text" id="displayBox">Tap the heart to unlock!</div>
-      <canvas id="scratchCanvas"></canvas>
     </div>
 
     <!-- Bookmark Action Bar -->
@@ -397,13 +385,11 @@
     const counterText = document.getElementById('counterText');
     const timerText = document.getElementById('timerText');
     const bookmarkBtn = document.getElementById('bookmarkBtn');
-    const canvas = document.getElementById('scratchCanvas');
-    const ctx = canvas.getContext('2d');
 
     // Setup Background Floating Hearts
     const bgHeartsContainer = document.getElementById('bgHearts');
     const heartSymbols = ['❤️', '💖', '✨', '💕'];
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < 1112; i++) {
       const heart = document.createElement('div');
       heart.className = 'bg-heart';
       heart.innerText = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
@@ -412,63 +398,6 @@
       heart.style.animationDuration = `${6 + Math.random() * 6}s`;
       bgHeartsContainer.appendChild(heart);
     }
-
-    // Canvas Pink & Red Heart-Pattern Sheet Setup
-    function initScratchCard(coverText = "Scratch Me! ✨") {
-      const rect = canvas.parentElement.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
-
-      // Pink & Red Pattern Base
-      const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-      gradient.addColorStop(0, '#ff4b72');
-      gradient.addColorStop(1, '#ff85a2');
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // Draw Pink & Red Heart Pattern Overlay
-      ctx.fillStyle = "rgba(255, 255, 255, 0.25)";
-      ctx.font = "16px sans-serif";
-      for (let x = 10; x < canvas.width; x += 32) {
-        for (let y = 20; y < canvas.height; y += 32) {
-          ctx.fillText("❤️", x, y);
-        }
-      }
-
-      // Front Label Text
-      ctx.fillStyle = "#ffffff";
-      ctx.font = "bold 16px -apple-system, sans-serif";
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      ctx.shadowColor = "rgba(0,0,0,0.2)";
-      ctx.shadowBlur = 4;
-      ctx.fillText(coverText, canvas.width / 2, canvas.height / 2);
-      ctx.shadowBlur = 0;
-    }
-
-    // Scratching Interaction Logic
-    let isScratching = false;
-
-    function scratch(e) {
-      if (!isScratching) return;
-      const rect = canvas.getBoundingClientRect();
-      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-      const x = clientX - rect.left;
-      const y = clientY - rect.top;
-
-      ctx.globalCompositeOperation = 'destination-out';
-      ctx.beginPath();
-      ctx.arc(x, y, 22, 0, Math.PI * 2);
-      ctx.fill();
-    }
-
-    canvas.addEventListener('mousedown', () => isScratching = true);
-    canvas.addEventListener('touchstart', () => isScratching = true);
-    window.addEventListener('mouseup', () => isScratching = false);
-    window.addEventListener('touchend', () => isScratching = false);
-    canvas.addEventListener('mousemove', scratch);
-    canvas.addEventListener('touchmove', scratch);
 
     // Local Storage Helpers
     function getStoredData() {
@@ -546,10 +475,12 @@
 
       if (validTimestamps.length < MAX_VIEWS) {
         currentCompliment = getRandomCompliment();
-        displayBox.innerText = currentCompliment;
-
-        // Reset Scratch Canvas with pink/red heart pattern
-        initScratchCard("Scratch to Reveal! 🪙");
+        
+        displayBox.classList.add('hidden');
+        setTimeout(() => {
+          displayBox.innerText = currentCompliment;
+          displayBox.classList.remove('hidden');
+        }, 150);
 
         validTimestamps.push(Date.now());
         const data = getStoredData();
@@ -631,7 +562,6 @@
 
     // Initial setup
     window.addEventListener('load', () => {
-      initScratchCard("Tap Above First!");
       updateUI();
     });
 
