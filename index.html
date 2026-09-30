@@ -97,7 +97,7 @@
       justify-content: space-between;
       align-items: center;
       width: 100%;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
 
     .app-title {
@@ -127,10 +127,10 @@
       background: linear-gradient(135deg, #ff2a55 0%, #ff5e62 100%);
       color: #ffffff;
       border: none;
-      width: 140px;
-      height: 140px;
+      width: 130px;
+      height: 130px;
       border-radius: 50%;
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 700;
       cursor: pointer;
       line-height: 1.3;
@@ -140,7 +140,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
 
     .heart-btn:active {
@@ -154,26 +154,26 @@
       color: #8e8e93;
     }
 
-    /* Direct Compliment Box */
+    /* LARGER Compliment Container */
     .compliment-container {
-      min-height: 100px;
+      min-height: 140px; /* Increased height for longer compliments */
       width: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 16px;
-      background: rgba(255, 255, 255, 0.6);
-      border-radius: 20px;
+      padding: 18px 16px;
+      background: rgba(255, 255, 255, 0.65);
+      border-radius: 22px;
       border: 1px solid rgba(255, 255, 255, 0.9);
       margin-bottom: 12px;
       box-shadow: inset 0 2px 6px rgba(0,0,0,0.02);
     }
 
     .compliment-text {
-      font-size: 16px;
+      font-size: 15px; /* Comfortable font size for multi-line text */
       font-weight: 600;
       color: #b8002e;
-      line-height: 1.45;
+      line-height: 1.5;
       text-align: center;
       opacity: 1;
       transform: translateY(0) scale(1);
@@ -328,9 +328,9 @@
       <button class="fav-btn" id="openFavs">❤️ Saved (<span id="favCount">0</span>)</button>
     </div>
 
-    <button class="heart-btn" id="loveBtn">Why I Love You ❤️</button>
+    <button class="heart-btn" id="loveBtn"> I Love You ❤️</button>
     
-    <!-- Compliment Container -->
+    <!-- Larger Compliment Container -->
     <div class="compliment-container">
       <div class="compliment-text" id="displayBox">Tap the heart to unlock!</div>
     </div>
@@ -358,27 +358,54 @@
   </div>
 
   <script>
-    // Compliments Array - Add as many as you want!
+    // All 31 Cleaned Compliments
     const compliments = [
-      "Your laugh instantly brightens up my whole day.",
-      "You have the kindest and sweetest heart in the world.",
-      "I love how thoughtful you are with everyone around you.",
-      "Being with you makes everything infinitely better.",
-      "You make me smile without even trying.",
-      "Your eyes light up whenever you get excited about something.",
-      "You are my absolute favorite person to talk to.",
-      "I love how passionate you get about things you care about.",
-      "You make even simple, ordinary days feel special.",
-      "You inspire me every single day.",
-      "Whatever happens, I'm always in your corner.",
-      "You're cute even when you're mildly annoyed!"
+      "I just love how beautiful you are.",
+      "I love staring into your eyes.",
+      "I love spending time with you just laughing.",
+      "I love how your smile can make my day better.",
+      "I love how beautiful your smile is it lights up my day.",
+      "I love how happy you get over small things.",
+      "I love when you have your baby voice; you look and sound so adorable.",
+      "I love that childish, silly part of you that only I get to see.",
+      "I really find your nose so attractive, I can't explain this to you.",
+      "I really love when you come to me with your problems.",
+      "I love the small updates you give throughout the day if I'm not there with you.",
+      "I love how you have now owned this relationship in front of your friends.",
+      "I love how you sometimes get mad over little things and love jab mujhe mana parhta hai.",
+      "I love how energetic you get when you start planning something, especially if it involves food.",
+      "I love how you can share anything with me without worrying.",
+      "I love how I can also share anything with you knowing you will understand and won't judge whatsoever.",
+      "I love how I can share my whole day with you sitting right in front of you and still feel like that was not enough.",
+      "I love how fucking sexy your lips are I mean it's hard to explain, but your lower lip is hella sexy.",
+      "I love the comfort I have developed with you so that I can express and share anything I like.",
+      "I love how much you care about me. I mean if I eat, sleep, or whatever it is, you are always worried ke sab sahi hai.",
+      "I love how life is just easy when you are there.",
+      "I love sharing the moments of expressing love to you.",
+      "I love when I lay in your lap, I just felt like such a baby taking in love from you.",
+      "I love how cute your cheeks are so soft and so fun to kiss.",
+      "I love holding your hand and driving around.",
+      "I just love talking to you about random stuff, understanding your points of view, and getting into those deep talks.",
+      "I love how we share the love for meetha.",
+      "I love how our families are so similar we can understand each other's problems.",
+      "I love how close you have gotten with my younger siblings and that you genuinely adore them.",
+      "I love knowing the fact that if anything wrong is happening in life, I always have you to share that with and you will always try to make it better.",
+      "I love kissing you, I love hugging you, and feeling safe and loved by you.",
+      "You are already so, so, so beautiful, but when you smile my God!",
+      "I already love you so much, but when you talk in that baby voice, I feel like I just want to hug you so tightly.",
+      "I love kissing your right cheek, left cheek, and forehead (can we please start doing this again? 🥺)",
+      "I love how lovely and sweet of a person you are.",
+      "You are just so beautiful, I can honestly just keep looking at you for ages and never get tired.",
+      "I love when you get all sassy and confident in yourself."
+      
+
+      
     ];
 
     const MAX_VIEWS = 5;
-    const HOUR_IN_MS = 0 * 60 * 1000;
+    const HOUR_IN_MS = 15 * 60 * 1000;
 
     let currentCompliment = '';
-    let lastUsedIndex = -1;
 
     const loveBtn = document.getElementById('loveBtn');
     const displayBox = document.getElementById('displayBox');
@@ -386,10 +413,10 @@
     const timerText = document.getElementById('timerText');
     const bookmarkBtn = document.getElementById('bookmarkBtn');
 
-    // Setup Background Floating Hearts
+    // Background Floating Hearts
     const bgHeartsContainer = document.getElementById('bgHearts');
     const heartSymbols = ['❤️', '💖', '✨', '💕'];
-    for (let i = 0; i < 1112; i++) {
+    for (let i = 0; i < 1000; i++) {
       const heart = document.createElement('div');
       heart.className = 'bg-heart';
       heart.innerText = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
@@ -399,31 +426,49 @@
       bgHeartsContainer.appendChild(heart);
     }
 
-    // Local Storage Helpers
+    // Storage Helpers
     function getStoredData() {
       const data = localStorage.getItem('love_app_data');
-      return data ? JSON.parse(data) : { timestamps: [], favorites: [] };
+      return data ? JSON.parse(data) : { timestamps: [], favorites: [], queue: [] };
     }
 
     function saveStoredData(data) {
       localStorage.setItem('love_app_data', JSON.stringify(data));
     }
 
+    // Fisher-Yates Shuffle Algorithm
+    function shuffleArray(array) {
+      let shuffled = [...array];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return shuffled;
+    }
+
+    // Get Next Unique Compliment From Shuffled Queue
+    function getNextCompliment() {
+      const data = getStoredData();
+      let queue = data.queue || [];
+
+      // If queue is empty or depleted, generate a fresh shuffled index array (0 to 30)
+      if (queue.length === 0) {
+        const indices = Array.from({ length: compliments.length }, (_, i) => i);
+        queue = shuffleArray(indices);
+      }
+
+      // Pop the next index from queue
+      const nextIndex = queue.pop();
+      data.queue = queue;
+      saveStoredData(data);
+
+      return compliments[nextIndex];
+    }
+
     function getValidTimestamps() {
       const now = Date.now();
       const { timestamps } = getStoredData();
       return (timestamps || []).filter(ts => now - ts < HOUR_IN_MS);
-    }
-
-    function getRandomCompliment() {
-      if (compliments.length <= 1) return compliments[0];
-      let randomIndex;
-      do {
-        randomIndex = Math.floor(Math.random() * compliments.length);
-      } while (randomIndex === lastUsedIndex);
-      
-      lastUsedIndex = randomIndex;
-      return compliments[randomIndex];
     }
 
     function updateUI() {
@@ -451,12 +496,10 @@
         }
       }
 
-      // Update Favorites Count
       const { favorites = [] } = getStoredData();
       document.getElementById('favCount').innerText = favorites.length;
     }
 
-    // Trigger Confetti & Haptics
     function triggerCelebration() {
       if (navigator.vibrate) {
         navigator.vibrate([30, 50, 30]);
@@ -469,12 +512,12 @@
       });
     }
 
-    // Main Button Click Handler
+    // Main Button Click
     loveBtn.addEventListener('click', () => {
       let validTimestamps = getValidTimestamps();
 
       if (validTimestamps.length < MAX_VIEWS) {
-        currentCompliment = getRandomCompliment();
+        currentCompliment = getNextCompliment();
         
         displayBox.classList.add('hidden');
         setTimeout(() => {
@@ -495,7 +538,7 @@
       }
     });
 
-    // Bookmark Handler
+    // Bookmark Action
     bookmarkBtn.addEventListener('click', () => {
       if (!currentCompliment) return;
       const data = getStoredData();
@@ -510,7 +553,7 @@
       }
     });
 
-    // Render Favorites List with Delete Buttons
+    // Favorites Rendering
     function renderFavorites() {
       const { favorites = [] } = getStoredData();
       favList.innerHTML = '';
@@ -547,7 +590,6 @@
       updateUI();
     }
 
-    // Favorites Modal Handlers
     const favModal = document.getElementById('favModal');
     const favList = document.getElementById('favList');
 
@@ -560,14 +602,13 @@
       favModal.style.display = 'none';
     });
 
-    // Initial setup
     window.addEventListener('load', () => {
       updateUI();
     });
 
     setInterval(updateUI, 1000);
 
-    // PWA Manifest and Service Worker
+    // PWA Setup
     const manifest = {
       "name": "For You ❤️",
       "short_name": "For You",
