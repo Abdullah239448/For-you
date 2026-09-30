@@ -316,6 +316,25 @@
       font-size: 14px;
       padding: 20px 0;
     }
+
+    .prev-btn {
+      background: rgba(255, 42, 85, 0.12);
+      border: 1px solid rgba(255, 42, 85, 0.25);
+      color: #ff2a55;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: -8px;
+      margin-bottom: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .prev-btn:active {
+      transform: scale(0.94);
+      background: rgba(255, 42, 85, 0.25);
+    }
   </style>
 </head>
 <body>
@@ -329,6 +348,7 @@
     </div>
 
     <button class="heart-btn" id="loveBtn">Things I Love About You ❤️</button>
+    <button class="prev-btn" id="prevBtn" style="display: none;">⏮ Previous</button>
     
     <div class="compliment-container">
       <div class="compliment-text" id="displayBox">Tap the heart to unlock!</div>
@@ -356,51 +376,54 @@
 
   <script>
     const compliments = [
-"I just love how beautiful you are.",
- "I love staring into your eyes.",
-  "I love spending time with you just laughing.",
-   "I love how your smile can make my day better.",
-    "I love how beautiful your smile is it lights up my day.",
-     "I love how happy you get over small things.",
+      "I just love how beautiful you are.",
+      "I love staring into your eyes.",
+      "I love spending time with you just laughing.",
+      "I love how your smile can make my day better.",
+      "I love how beautiful your smile is it lights up my day.",
+      "I love how happy you get over small things.",
       "I love when you have your baby voice; you look and sound so adorable.",
-       "I love that childish, silly part of you that only I get to see.",
-        "I really find your nose so attractive, I can't explain this to you.",
-         "I really love when you come to me with your problems.",
-          "I love the small updates you give throughout the day if I'm not there with you.",
-           "I love how you have now owned this relationship in front of your friends.",
-            "I love how you sometimes get mad over little things and love jab mujhe mana parhta hai.",
-             "I love how energetic you get when you start planning something, especially if it involves food.",
-              "I love how you can share anything with me without worrying.",
-               "I love how I can also share anything with you knowing you will understand and won't judge whatsoever.",
-                "I love how I can share my whole day with you sitting right in front of you and still feel like that was not enough.", 
-                "I love how fucking sexy your lips are I mean it's hard to explain, but your lower lip is hella sexy.",
-                 "I love the comfort I have developed with you so that I can express and share anything I like.",
-                  "I love how much you care about me. I mean if I eat, sleep, or whatever it is, you are always worried ke sab sahi hai.",
-                   "I love how life is just easy when you are there.",
-                    "I love sharing the moments of expressing love to you.",
-                    "I love when I lay in your lap, I just felt like such a baby taking in love from you.",
-                     "I love how cute your cheeks are so soft and so fun to kiss.",
-                      "I love holding your hand and driving around.",
-                       "I just love talking to you about random stuff, understanding your points of view, and getting into those deep talks.",
-                        "I love how we share the love for meetha.",
-                         "I love how our families are so similar we can understand each other's problems.",
-                          "I love how close you have gotten with my younger siblings and that you genuinely adore them.",
-                           "I love knowing the fact that if anything wrong is happening in life, I always have you to share that with and you will always try to make it better.",
-                            "I love kissing you, I love hugging you, and feeling safe and loved by you.",
-                             "You are already so, so, so beautiful, but when you smile my God!",
-                              "I already love you so much, but when you talk in that baby voice, I feel like I just want to hug you so tightly.",
-                               "I love kissing your right cheek, left cheek, and forehead (can we please start doing this again? 🥺)",
-                                "I love how lovely and sweet of a person you are.",
-                                 "You are just so beautiful, I can honestly just keep looking at you for ages and never get tired.",
-                                  "I love when you get all sassy and confident in yourself."
+      "I love that childish, silly part of you that only I get to see.",
+      "I really find your nose so attractive, I can't explain this to you.",
+      "I really love when you come to me with your problems.",
+      "I love the small updates you give throughout the day if I'm not there with you.",
+      "I love how you have now owned this relationship in front of your friends.",
+      "I love how you sometimes get mad over little things and love jab mujhe mana parhta hai.",
+      "I love how energetic you get when you start planning something, especially if it involves food.",
+      "I love how you can share anything with me without worrying.",
+      "I love how I can also share anything with you knowing you will understand and won't judge whatsoever.",
+      "I love how I can share my whole day with you sitting right in front of you and still feel like that was not enough.", 
+      "I love how fucking sexy your lips are I mean it's hard to explain, but your lower lip is hella sexy.",
+      "I love the comfort I have developed with you so that I can express and share anything I like.",
+      "I love how much you care about me. I mean if I eat, sleep, or whatever it is, you are always worried ke sab sahi hai.",
+      "I love how life is just easy when you are there.",
+      "I love sharing the moments of expressing love to you.",
+      "I love when I lay in your lap, I just felt like such a baby taking in love from you.",
+      "I love how cute your cheeks are so soft and so fun to kiss.",
+      "I love holding your hand and driving around.",
+      "I just love talking to you about random stuff, understanding your points of view, and getting into those deep talks.",
+      "I love how we share the love for meetha.",
+      "I love how our families are so similar we can understand each other's problems.",
+      "I love how close you have gotten with my younger siblings and that you genuinely adore them.",
+      "I love knowing the fact that if anything wrong is happening in life, I always have you to share that with and you will always try to make it better.",
+      "I love kissing you, I love hugging you, and feeling safe and loved by you.",
+      "You are already so, so, so beautiful, but when you smile my God!",
+      "I already love you so much, but when you talk in that baby voice, I feel like I just want to hug you so tightly.",
+      "I love kissing your right cheek, left cheek, and forehead (can we please start doing this again? 🥺)",
+      "I love how lovely and sweet of a person you are.",
+      "You are just so beautiful, I can honestly just keep looking at you for ages and never get tired.",
+      "I love when you get all sassy and confident in yourself."
     ];
 
     const MAX_VIEWS = 5;
-    const HOUR_IN_MS = 15 * 60 * 1000;
+    const HOUR_IN_MS = 60 * 60 * 1000;
 
     let currentCompliment = '';
+    let viewHistory = [];
+    let historyIndex = -1;
 
     const loveBtn = document.getElementById('loveBtn');
+    const prevBtn = document.getElementById('prevBtn');
     const displayBox = document.getElementById('displayBox');
     const counterText = document.getElementById('counterText');
     const timerText = document.getElementById('timerText');
@@ -463,6 +486,13 @@
       validTimestamps.sort((a, b) => a - b);
       const remaining = MAX_VIEWS - validTimestamps.length;
 
+      // Clear history array if hourly limit resets
+      if (validTimestamps.length === 0) {
+        viewHistory = [];
+        historyIndex = -1;
+        prevBtn.style.display = 'none';
+      }
+
       if (remaining > 0) {
         loveBtn.disabled = false;
         counterText.innerText = `${remaining} / ${MAX_VIEWS} available this hour`;
@@ -505,6 +535,13 @@
       if (validTimestamps.length < MAX_VIEWS) {
         currentCompliment = getNextCompliment();
         
+        // Track current 5-compliment history
+        viewHistory.push(currentCompliment);
+        if (viewHistory.length > validTimestamps.length + 1) {
+          viewHistory.shift();
+        }
+        historyIndex = viewHistory.length - 1;
+
         displayBox.classList.add('hidden');
         setTimeout(() => {
           displayBox.innerText = currentCompliment;
@@ -521,6 +558,27 @@
 
         bookmarkBtn.style.display = 'inline-flex';
         bookmarkBtn.innerText = "❤️ Save to Favorites";
+
+        if (viewHistory.length > 1) {
+          prevBtn.style.display = 'inline-flex';
+        }
+      }
+    });
+
+    prevBtn.addEventListener('click', () => {
+      if (historyIndex > 0) {
+        historyIndex--;
+        currentCompliment = viewHistory[historyIndex];
+
+        displayBox.classList.add('hidden');
+        setTimeout(() => {
+          displayBox.innerText = currentCompliment;
+          displayBox.classList.remove('hidden');
+        }, 150);
+
+        const { favorites = [] } = getStoredData();
+        bookmarkBtn.style.display = 'inline-flex';
+        bookmarkBtn.innerText = favorites.includes(currentCompliment) ? "✓ Saved!" : "❤️ Save to Favorites";
       }
     });
 
@@ -594,7 +652,7 @@
 
     // PWA Setup
     const manifest = {
-      "name": "For You ❤️",
+      "name": "For You ❤️️",
       "short_name": "For You",
       "start_url": "./",
       "display": "standalone",
