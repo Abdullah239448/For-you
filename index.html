@@ -98,6 +98,7 @@
       align-items: center;
       width: 100%;
       margin-bottom: 16px;
+      gap: 4px;
     }
 
     .app-title {
@@ -112,14 +113,15 @@
       background: rgba(255, 42, 85, 0.1);
       border: 1px solid rgba(255, 42, 85, 0.2);
       color: #ff2a55;
-      padding: 6px 12px;
+      padding: 6px 10px;
       border-radius: 20px;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 3px;
+      white-space: nowrap;
     }
 
     /* Interactive Heart Button */
@@ -397,124 +399,232 @@
       line-height: 1.4;
       border: 1px solid rgba(255, 42, 85, 0.2);
     }
+
     .passcode-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
 
-.passcode-card {
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-radius: 28px;
-  padding: 28px 20px;
-  width: 100%;
-  max-width: 320px;
-  text-align: center;
-  box-shadow: 0 20px 40px rgba(230, 80, 110, 0.3);
-}
+    .passcode-card {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 28px;
+      padding: 28px 20px;
+      width: 100%;
+      max-width: 320px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(230, 80, 110, 0.3);
+    }
 
-.passcode-title {
-  font-size: 20px;
-  font-weight: 700;
-  color: #ff2a55;
-  margin-bottom: 4px;
-}
+    .passcode-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #ff2a55;
+      margin-bottom: 4px;
+    }
 
-.passcode-sub {
-  font-size: 13px;
-  color: #8e8e93;
-  margin-bottom: 16px;
-}
+    .passcode-sub {
+      font-size: 13px;
+      color: #8e8e93;
+      margin-bottom: 16px;
+    }
 
-.pin-display {
-  font-size: 60px;
-  letter-spacing: 10px;
-  color: #b8002e;
-  margin-bottom: 20px;
-  height: 58px;
-}
+    .pin-display {
+      font-size: 60px;
+      letter-spacing: 10px;
+      color: #b8002e;
+      margin-bottom: 20px;
+      height: 58px;
+    }
 
-.keypad {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  max-width: 240px;
-  margin: 0 auto;
-}
+    .keypad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      max-width: 240px;
+      margin: 0 auto;
+    }
 
-.key-btn {
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(255, 42, 85, 0.2);
-  color: #ff2a55;
-  font-size: 20px;
-  font-weight: 700;
-  height: 54px;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.15s ease;
-}
+    .key-btn {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(255, 42, 85, 0.2);
+      color: #ff2a55;
+      font-size: 20px;
+      font-weight: 700;
+      height: 54px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+    }
 
-.key-btn:active {
-  transform: scale(0.9);
-  background: #ff2a55;
-  color: white;
-}
+    .key-btn:active {
+      transform: scale(0.9);
+      background: #ff2a55;
+      color: white;
+    }
 
-.key-btn.clear { color: #8e8e93; border-color: #d1d1d6; }
-.key-btn.enter { background: #ff2a55; color: white; border: none; }
+    .key-btn.clear { color: #8e8e93; border-color: #d1d1d6; }
+    .key-btn.enter { background: #ff2a55; color: white; border: none; }
 
-.passcode-error {
-  font-size: 12px;
-  font-weight: 700;
-  color: #ff2a55;
-  margin-top: 14px;
-  display: none;
-}
+    .passcode-error {
+      font-size: 12px;
+      font-weight: 700;
+      color: #ff2a55;
+      margin-top: 14px;
+      display: none;
+    }
+
+    /* To-Do Tabs Navigation */
+    .todo-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      background: rgba(255, 42, 85, 0.08);
+      padding: 4px;
+      border-radius: 20px;
+    }
+
+    .todo-tab-btn {
+      flex: 1;
+      background: none;
+      border: none;
+      padding: 8px;
+      border-radius: 16px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #ff2a55;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .todo-tab-btn.active {
+      background: #ff2a55;
+      color: white;
+      box-shadow: 0 4px 10px rgba(255, 42, 85, 0.3);
+    }
+
+    /* List Items & Checkboxes */
+    .todo-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 55vh;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .todo-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #fff0f3;
+      padding: 12px 14px;
+      border-radius: 16px;
+      border-left: 4px solid #ff2a55;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .todo-item:active {
+      transform: scale(0.98);
+    }
+
+    .todo-item.completed {
+      opacity: 0.6;
+      background: #f2f2f7;
+      border-left-color: #8e8e93;
+    }
+
+    .todo-checkbox {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid #ff2a55;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: white;
+      transition: all 0.2s ease;
+    }
+
+    .todo-item.completed .todo-checkbox {
+      background: #ff2a55;
+      border-color: #ff2a55;
+    }
+
+    .todo-checkbox::after {
+      content: '✓';
+      color: white;
+      font-size: 12px;
+      font-weight: 800;
+      display: none;
+    }
+
+    .todo-item.completed .todo-checkbox::after {
+      display: block;
+    }
+
+    .todo-text {
+      font-size: 14px;
+      font-weight: 600;
+      color: #b8002e;
+      line-height: 1.4;
+      text-align: left;
+      transition: all 0.2s ease;
+    }
+
+    .todo-item.completed .todo-text {
+      text-decoration: line-through;
+      color: #8e8e93;
+    }
   </style>
 </head>
 <body>
+
   <!-- Passcode Lock Screen -->
-<div class="passcode-overlay" id="passcodeOverlay">
-  <div class="passcode-card">
-    <div class="passcode-title">Enter Passcode 🔒</div>
-    <div class="passcode-sub">This app is strictly for you ❤️</div>
-    <div class="pin-display" id="pinDisplay">••••</div>
-    <div class="keypad">
-      <button class="key-btn" onclick="pressKey('1')">1</button>
-      <button class="key-btn" onclick="pressKey('2')">2</button>
-      <button class="key-btn" onclick="pressKey('3')">3</button>
-      <button class="key-btn" onclick="pressKey('4')">4</button>
-      <button class="key-btn" onclick="pressKey('5')">5</button>
-      <button class="key-btn" onclick="pressKey('6')">6</button>
-      <button class="key-btn" onclick="pressKey('7')">7</button>
-      <button class="key-btn" onclick="pressKey('8')">8</button>
-      <button class="key-btn" onclick="pressKey('9')">9</button>
-      <button class="key-btn clear" onclick="clearKey()">✕</button>
-      <button class="key-btn" onclick="pressKey('0')">0</button>
-      <button class="key-btn enter" onclick="submitPin()">✓</button>
+  <div class="passcode-overlay" id="passcodeOverlay">
+    <div class="passcode-card">
+      <div class="passcode-title">Enter Passcode 🔒</div>
+      <div class="passcode-sub">This app is strictly for you ❤️</div>
+      <div class="pin-display" id="pinDisplay">••••</div>
+      <div class="keypad">
+        <button class="key-btn" onclick="pressKey('1')">1</button>
+        <button class="key-btn" onclick="pressKey('2')">2</button>
+        <button class="key-btn" onclick="pressKey('3')">3</button>
+        <button class="key-btn" onclick="pressKey('4')">4</button>
+        <button class="key-btn" onclick="pressKey('5')">5</button>
+        <button class="key-btn" onclick="pressKey('6')">6</button>
+        <button class="key-btn" onclick="pressKey('7')">7</button>
+        <button class="key-btn" onclick="pressKey('8')">8</button>
+        <button class="key-btn" onclick="pressKey('9')">9</button>
+        <button class="key-btn clear" onclick="clearKey()">✕</button>
+        <button class="key-btn" onclick="pressKey('0')">0</button>
+        <button class="key-btn enter" onclick="submitPin()">✓</button>
+      </div>
+      <div class="passcode-error" id="pinError">Incorrect PIN, try again!</div>
     </div>
-    <div class="passcode-error" id="pinError">Incorrect PIN, try again!</div>
   </div>
-</div>
 
   <div class="bg-hearts" id="bgHearts"></div>
 
   <div class="card">
     <div class="top-bar">
       <button class="fav-btn" id="openMilestones">📖 Our Story</button>
+      <button class="fav-btn" id="openTodoList">📝 To-Do</button>
       <button class="fav-btn" id="openFavs">❤️ Saved (<span id="favCount">0</span>)</button>
     </div>
 
@@ -526,7 +636,7 @@
     </div>
 
     <div class="action-bar">
-      <button class="bookmark-btn" id="bookmarkBtn">❤️ Save to Favorites</button>
+      <button class="bookmark-btn" id="bookmarkBtn">❤️️ Save to Favorites</button>
     </div>
     
     <div class="footer-info">
@@ -546,7 +656,7 @@
     </div>
   </div>
 
-  <!-- Milestones Modal (Feature 5) -->
+  <!-- Milestones Modal -->
   <div class="modal" id="milestonesModal">
     <div class="modal-content">
       <div class="modal-header">
@@ -554,6 +664,21 @@
         <button class="close-btn" id="closeMilestones">✕</button>
       </div>
       <div class="cards-stack" id="milestonesList"></div>
+    </div>
+  </div>
+
+  <!-- To-Do List Modal -->
+  <div class="modal" id="todoModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">Our To-Do List 📝</div>
+        <button class="close-btn" id="closeTodo">✕</button>
+      </div>
+      <div class="todo-tabs">
+        <button class="todo-tab-btn active" id="tabRomantic" onclick="switchTodoTab('romantic')">Romantic 💕</button>
+        <button class="todo-tab-btn" id="tabIntimate" onclick="switchTodoTab('intimate')">Intimate 🔥</button>
+      </div>
+      <div class="todo-list" id="todoListContainer"></div>
     </div>
   </div>
 
@@ -672,7 +797,14 @@
       "Screenshot it and send it to me Share some of your favourite memories with me",
       "Screenshot this and send it to me tables have turned i need your Looooooooooooove",
       "Screenshot this and send it to me 'M'",
-      "Not a compliment but a request can we please please just sit down in the link one day and do the insta questions please 🥺"
+      "Not a compliment but a request can we please please just sit down in the link one day and do the insta questions please 🥺",
+      "I love when you wake me up from my sleep, I love seeing you picture as soon as i open my eyes, i love hearing your voice when i wake up",
+      "I love when i wake you up and your sleepy i love your sleepy voice",
+      "I love when you say you love me not text but in words 'even tho you havent said it in a long time so whats up with that'",
+      "I loved calling you mine tho i have stopped due to reasons beyond my understanding but that was one the first thing i used to say to you.",
+      "I love how i have this one side of me that is purely just visible to you no one on the earth knows about it other than you.",
+      "I love when you call me any nickname its fun to hear please do it more often",
+      "I love how much I love you (Im not retarded i just dont know how to explain this)"
     ];
 
     // Our Story Memories / Milestones Array
@@ -683,6 +815,86 @@
       { front: "Late Night Talks 🌙", back: "The insta wala question are by far one of my favourite things to do." },
       { front: "After FAR ka paper 🏡", back: "The way you came running at me after FAR ka paper is my fav memory." }
     ];
+
+    // To-Do List Data categorized by mood
+    const todoData = {
+      romantic: [
+        "Late night long drive holding your hand raining slowly 🚗",
+        "Go a proper date kind of thing food+dessert 🍰",
+        "Make you meet Maryam and Dawud",
+        "Make some fresh food for you and feed you by hand 🍨",
+        "Have another deep talk session and do the questions wali thing 💖",
+        "Take you golfing with me and explain how it works(very doable)",
+        "Hold you hand and walk around a park or have your arm in my arm and walk around a mall 🤝",
+        "Go shopping for clothes with you where you can help me choose my outfits "
+      ],
+      intimate: [
+        "I want to kiss you from just below your neck till you fore head aggressively 💋",
+        "Long cuddle session with no phones allowed on the backseat 🫂",
+        "Sit you on my lap and hug you tightly and bury my head in your neck 💆‍♂️",
+        "Just look into your eyes for 5 mins unintrupted 🤝",
+        
+      ]
+    };
+
+    let currentTodoTab = 'romantic';
+
+    // Storage Helper for Completed Checkboxes
+    function getCompletedTodos() {
+      const data = localStorage.getItem('love_app_todos');
+      return data ? JSON.parse(data) : [];
+    }
+
+    function toggleTodoItem(itemText) {
+      let completed = getCompletedTodos();
+      if (completed.includes(itemText)) {
+        completed = completed.filter(i => i !== itemText);
+      } else {
+        completed.push(itemText);
+        triggerCelebration(); // Confetti on ticking items!
+      }
+      localStorage.setItem('love_app_todos', JSON.stringify(completed));
+      renderTodoList();
+    }
+
+    function switchTodoTab(category) {
+      currentTodoTab = category;
+      document.getElementById('tabRomantic').classList.toggle('active', category === 'romantic');
+      document.getElementById('tabIntimate').classList.toggle('active', category === 'intimate');
+      renderTodoList();
+    }
+
+    function renderTodoList() {
+      const container = document.getElementById('todoListContainer');
+      container.innerHTML = '';
+      const completed = getCompletedTodos();
+      const items = todoData[currentTodoTab] || [];
+
+      items.forEach(itemText => {
+        const isDone = completed.includes(itemText);
+        const itemEl = document.createElement('div');
+        itemEl.className = `todo-item ${isDone ? 'completed' : ''}`;
+        itemEl.onclick = () => toggleTodoItem(itemText);
+
+        itemEl.innerHTML = `
+          <div class="todo-checkbox"></div>
+          <div class="todo-text">${itemText}</div>
+        `;
+
+        container.appendChild(itemEl);
+      });
+    }
+
+    // Modal Toggle Handlers for To-Do List
+    const todoModal = document.getElementById('todoModal');
+    document.getElementById('openTodoList').addEventListener('click', () => {
+      renderTodoList();
+      todoModal.style.display = 'flex';
+    });
+
+    document.getElementById('closeTodo').addEventListener('click', () => {
+      todoModal.style.display = 'none';
+    });
 
     const MAX_VIEWS = 7;
     const HOUR_IN_MS = 60 * 60 * 1000;
@@ -709,46 +921,46 @@
       heart.style.animationDuration = `${6 + Math.random() * 6}s`;
       bgHeartsContainer.appendChild(heart);
     }
-    const CORRECT_PIN = "1806"; // Set your custom 4-digit passcode here
-let enteredPin = "";
 
-function updatePinDisplay() {
-  const dots = "•".repeat(enteredPin.length) + "◦".repeat(4 - enteredPin.length);
-  document.getElementById('pinDisplay').innerText = enteredPin.length > 0 ? dots : "◦◦◦◦";
-}
+    const CORRECT_PIN = "1806"; 
+    let enteredPin = "";
 
-function pressKey(num) {
-  if (enteredPin.length < 4) {
-    enteredPin += num;
-    updatePinDisplay();
-    document.getElementById('pinError').style.display = 'none';
-  }
-}
+    function updatePinDisplay() {
+      const dots = "•".repeat(enteredPin.length) + "◦".repeat(4 - enteredPin.length);
+      document.getElementById('pinDisplay').innerText = enteredPin.length > 0 ? dots : "◦◦◦◦";
+    }
 
-function clearKey() {
-  enteredPin = "";
-  updatePinDisplay();
-  document.getElementById('pinError').style.display = 'none';
-}
+    function pressKey(num) {
+      if (enteredPin.length < 4) {
+        enteredPin += num;
+        updatePinDisplay();
+        document.getElementById('pinError').style.display = 'none';
+      }
+    }
 
-function submitPin() {
-  if (enteredPin === CORRECT_PIN) {
-    document.getElementById('passcodeOverlay').style.display = 'none';
-    sessionStorage.setItem('app_unlocked', 'true');
-    triggerCelebration();
-  } else {
-    document.getElementById('pinError').style.display = 'block';
-    enteredPin = "";
-    updatePinDisplay();
-  }
-}
+    function clearKey() {
+      enteredPin = "";
+      updatePinDisplay();
+      document.getElementById('pinError').style.display = 'none';
+    }
 
-// Auto unlock if already entered during current session
-window.addEventListener('load', () => {
-  if (sessionStorage.getItem('app_unlocked') === 'true') {
-    document.getElementById('passcodeOverlay').style.display = 'none';
-  }
-});
+    function submitPin() {
+      if (enteredPin === CORRECT_PIN) {
+        document.getElementById('passcodeOverlay').style.display = 'none';
+        sessionStorage.setItem('app_unlocked', 'true');
+        triggerCelebration();
+      } else {
+        document.getElementById('pinError').style.display = 'block';
+        enteredPin = "";
+        updatePinDisplay();
+      }
+    }
+
+    window.addEventListener('load', () => {
+      if (sessionStorage.getItem('app_unlocked') === 'true') {
+        document.getElementById('passcodeOverlay').style.display = 'none';
+      }
+    });
 
     function getStoredData() {
       const data = localStorage.getItem('love_app_data');
@@ -795,7 +1007,6 @@ window.addEventListener('load', () => {
       validTimestamps.sort((a, b) => a - b);
       const remaining = MAX_VIEWS - validTimestamps.length;
 
-      // Clear history array if hourly limit resets
       if (validTimestamps.length === 0) {
         viewHistory = [];
         historyIndex = -1;
@@ -844,7 +1055,6 @@ window.addEventListener('load', () => {
       if (validTimestamps.length < MAX_VIEWS) {
         currentCompliment = getNextCompliment();
         
-        // Track current 5-compliment history
         viewHistory.push(currentCompliment);
         if (viewHistory.length > validTimestamps.length + 1) {
           viewHistory.shift();
@@ -887,7 +1097,7 @@ window.addEventListener('load', () => {
 
         const { favorites = [] } = getStoredData();
         bookmarkBtn.style.display = 'inline-flex';
-        bookmarkBtn.innerText = favorites.includes(currentCompliment) ? "✓ Saved!" : "❤️️ Save to Favorites";
+        bookmarkBtn.innerText = favorites.includes(currentCompliment) ? "✓ Saved!" : "❤ Save to Favorites";
       }
     });
 
@@ -941,7 +1151,6 @@ window.addEventListener('load', () => {
       updateUI();
     }
 
-    // Feature 5: Render Memory Flip Cards
     function renderMilestones() {
       const container = document.getElementById('milestonesList');
       container.innerHTML = '';
