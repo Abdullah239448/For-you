@@ -819,7 +819,7 @@
     // To-Do List Data categorized by mood
     const todoData = {
       romantic: [
-        "Late night long drive holding your hand raining slowly 🚗",
+        "Late night long drive holding your hand, raining slowly 🚗",
         "Go a proper date kind of thing food+dessert 🍰",
         "Make you meet Maryam and Dawud",
         "Make some fresh food for you and feed you by hand 🍨",
@@ -1219,7 +1219,7 @@
 
     if ('serviceWorker' in navigator) {
       const swCode = `
-        const CACHE_NAME = 'app-cache-v2';
+        const CACHE_NAME = 'app-cache-v3';
         self.addEventListener('install', e => self.skipWaiting());
         self.addEventListener('fetch', e => e.respondWith(fetch(e.request).catch(() => caches.match(e.request))));
       `;
