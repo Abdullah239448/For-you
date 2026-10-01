@@ -221,7 +221,7 @@
       color: #ff2a55;
     }
 
-    /* Favorites Modal */
+    /* Favorites & Milestones Modal */
     .modal {
       position: fixed;
       top: 0;
@@ -335,15 +335,186 @@
       transform: scale(0.94);
       background: rgba(255, 42, 85, 0.25);
     }
+
+    /* 3D Flip Card Styles for Feature 5 */
+    .cards-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      overflow-y: auto;
+      padding: 4px;
+    }
+
+    .flip-card {
+      background-color: transparent;
+      width: 100%;
+      height: 105px;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+
+    .flip-card.flipped .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flip-card-front, .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      border-radius: 18px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .flip-card-front {
+      background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+      color: white;
+      font-weight: 700;
+      font-size: 14px;
+      box-shadow: 0 4px 12px rgba(255, 42, 85, 0.25);
+    }
+
+    .flip-card-back {
+      background: #fff0f3;
+      color: #b8002e;
+      transform: rotateY(180deg);
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.4;
+      border: 1px solid rgba(255, 42, 85, 0.2);
+    }
+    .passcode-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.passcode-card {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 28px;
+  padding: 28px 20px;
+  width: 100%;
+  max-width: 320px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(230, 80, 110, 0.3);
+}
+
+.passcode-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #ff2a55;
+  margin-bottom: 4px;
+}
+
+.passcode-sub {
+  font-size: 13px;
+  color: #8e8e93;
+  margin-bottom: 16px;
+}
+
+.pin-display {
+  font-size: 28px;
+  letter-spacing: 8px;
+  color: #b8002e;
+  margin-bottom: 20px;
+  height: 36px;
+}
+
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  max-width: 240px;
+  margin: 0 auto;
+}
+
+.key-btn {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 42, 85, 0.2);
+  color: #ff2a55;
+  font-size: 20px;
+  font-weight: 700;
+  height: 54px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.key-btn:active {
+  transform: scale(0.9);
+  background: #ff2a55;
+  color: white;
+}
+
+.key-btn.clear { color: #8e8e93; border-color: #d1d1d6; }
+.key-btn.enter { background: #ff2a55; color: white; border: none; }
+
+.passcode-error {
+  font-size: 12px;
+  font-weight: 700;
+  color: #ff2a55;
+  margin-top: 14px;
+  display: none;
+}
   </style>
 </head>
 <body>
+  <!-- Passcode Lock Screen -->
+<div class="passcode-overlay" id="passcodeOverlay">
+  <div class="passcode-card">
+    <div class="passcode-title">Enter Passcode 🔒</div>
+    <div class="passcode-sub">This app is strictly for you ❤️</div>
+    <div class="pin-display" id="pinDisplay">••••</div>
+    <div class="keypad">
+      <button class="key-btn" onclick="pressKey('1')">1</button>
+      <button class="key-btn" onclick="pressKey('2')">2</button>
+      <button class="key-btn" onclick="pressKey('3')">3</button>
+      <button class="key-btn" onclick="pressKey('4')">4</button>
+      <button class="key-btn" onclick="pressKey('5')">5</button>
+      <button class="key-btn" onclick="pressKey('6')">6</button>
+      <button class="key-btn" onclick="pressKey('7')">7</button>
+      <button class="key-btn" onclick="pressKey('8')">8</button>
+      <button class="key-btn" onclick="pressKey('9')">9</button>
+      <button class="key-btn clear" onclick="clearKey()">✕</button>
+      <button class="key-btn" onclick="pressKey('0')">0</button>
+      <button class="key-btn enter" onclick="submitPin()">✓</button>
+    </div>
+    <div class="passcode-error" id="pinError">Incorrect PIN, try again!</div>
+  </div>
+</div>
 
   <div class="bg-hearts" id="bgHearts"></div>
 
   <div class="card">
     <div class="top-bar">
-      <div class="app-title">Just For You</div>
+      <button class="fav-btn" id="openMilestones">📖 Our Story</button>
       <button class="fav-btn" id="openFavs">❤️ Saved (<span id="favCount">0</span>)</button>
     </div>
 
@@ -364,6 +535,7 @@
     </div>
   </div>
 
+  <!-- Favorites Modal -->
   <div class="modal" id="favModal">
     <div class="modal-content">
       <div class="modal-header">
@@ -371,6 +543,17 @@
         <button class="close-btn" id="closeFavs">✕</button>
       </div>
       <div class="fav-list" id="favList"></div>
+    </div>
+  </div>
+
+  <!-- Milestones Modal (Feature 5) -->
+  <div class="modal" id="milestonesModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">Our Story 📖</div>
+        <button class="close-btn" id="closeMilestones">✕</button>
+      </div>
+      <div class="cards-stack" id="milestonesList"></div>
     </div>
   </div>
 
@@ -415,75 +598,90 @@
       "I love when you get all sassy and confident in yourself.",
       "I love how you can make even the most ordinary day feel special just by being there.",
       "I love the way you look at me when you’re genuinely happy.",
-"I love how your face changes when you’re excited to tell me something.",
-"I love how you always somehow manage to make me smile even when I’m not in the mood.",
-"I love how I can sit next to you doing absolutely nothing and still have the best time.",
-"I love how contagious your laugh is.Matlab i just love your laugh",
-"I love how you sometimes(Mostly) laugh at your own jokes before you've even finished telling them.",
-"I love how dramatic you can get over the smallest things in a joking way",
-"I love secretly watching you when you don't even know im looking like jab tum lecture le rahi hoti ho",
-"I love how pretty you look when you're not even trying.",
-"I love your sleepy face. Like when you get so sleepy and sleep aik dum se and wake up you look so cute",
-"I love how cute you look when you're tired and just want to be cuddled. I really want to cuddle you",
-"I love the way you get comfortable around me and completely let your guard down.",
-"I love how I get to see sides of you that not everyone gets to see.",
-"I love how you trust me with the things that matter to you.",
-"I love knowing that you feel safe enough with me to tell me what's actually on your mind.",
-"I love how you own being my babygirl, I love you so so much",
-"I love the way you care about the people you love(Me obviously).",
-"I love how protective you can get over me espessially shuru shuru me.",
-"I love how genuinely happy you get when anything good happens to me.",
-"I love listening to you explain things even when you have already told me those stories before.",
-"I love our random conversations that somehow turn into hours of talking like hours and hours of talking i just love it.",
-"I love how we can go from absolute nonsense to the deepest conversation within five minutes and then back too complete nonsense Ahmm Ahmm",
-"I love how easily we can make each other laugh I love your smile so much.",
-"I love our stupid inside jokes like things only we know.",
-"I love when something happens and you're the first person I want to tell like im always dying to tell you.",
-"I love being able to text you about the most random thing and knowing you'll entertain me.",
-"I love how exited you get when ever i even do something small for you makes me feel like it was more than worth it.",
-"I love when I see your name pop up on my phone.I get so excited",
-"I love how one message from you can completely change my mood.",
-"I love how you somehow became such a big part of my everyday life without me even realizing it. You became the best part of my life",
-"I love how natural everything feels with you. How everythinh feels easy with you. How i just want to experience every part of life with you",
-"I love how I never feel like I have to pretend to be someone else around you I can be my true pure self and youll love me for that.",
-"I love that I can be completely stupid around you and you somehow still love me.",
-"I love how you tolerate my nonsense and also reassure me through my stupid thoughts",
-"I love how you sometimes give me that look when you know I'm being an idiot its a very sexy look.",
-"I love your little reactions when I tease you.-Tang na kar- but Janu me apko tang kar sakta hun",
-"I love making you blush.I love when i say somthing corny and you are like Shut up Abdullah but you enjoy that",
-"I love when you get shy when we talk about any romantic or intimate thin that happend.",
-"I love when you get confident and suddenly become the sassiest person alive. Sassy Abeeha is a haapy Abeeha",
-"I love that little attitude of yours even when it drives me slightly crazy. I love everthing about it",
-"I love how cute you are when you're annoyed with me. Like the fake annoyed asal annoyed oe meri jan nikaal ati hai",
-"I love you Cheap flirt back",
-"I love the feeling when we make up after being annoyed at each other. It genuinly makes me feel so close to you",
-"I love how even our little arguments somehow remind me how much I care about you. I care about you more than anything in this world",
-"I love when i hold you hand and feel safe just from your pressence.",
-"I love holding you close and just forgetting about everything else for a while just fully focused on you.",
-"I love hugging you for way longer than necessary i never want to let go of you just keep you in a hug forever.",
-"I love resting my head against you I love resting my head on your lap, i loved resting my head on your chest.",
-"I love having you close enough that I don't even need to say anything.",
-"I love kissing your forehead and cheeks.",
-"I love your cheeks so much that sometimes I genuinely just want to squish them.",
-"I love looking at your face from really close and realizing how lucky I am to even be able to see that.",
-"I love your eyes in literally every mood—happy, sleepy, annoyed, excited, everything.",
-"I love your little facial expressions. I love like love your sassy sexy faical expression and when you roll down your lower lip and express sadness so cute.",
-"I love your voice, especially when you're comfortable and just talking normally with me and obviously obviously your BABY VOICE.",
-"I love when you're being extra cute and you don't even realize it like you are just telling a story but you get so cutie",
-"I love how adorable you are when you're excited about metha and food.",
-"I love planning what we're going to eat with you I love eating with you i lovee feeding you food with my hand.",
-"I love sharing meetha with you even though I dont sahre it with anyone else.",
-"I love going out with you without even having a proper plan just having you there is all the plan i need.",
-"I love driving around with you and just talking about whatever comes into our heads.",
-"I love all the little things you do for me that you probably don't even realize I notice i do notice and i really do appreciate and love you for it.",
-"I love knowing that if I ever need someone, you will always be there for me.",
-"I love that I can tell you when something is bothering me instead of keeping it inside and you will fix it.",
-"I love that you can be my best friend and the person I love at the same time.",
-"I love how much of my life I get to share with you (all of it).",
-"I love making plans with you and then getting unnecessarily excited about them also the midnight overthinking breakdowns.",
-"I love knowing there are still so many memories we haven't made yet i am so excited for making all those memories with you.",
-"I love that somehow, even after all this time, I  still look at you and think, 'God, she's so fucking beautiful.' beacuse you are you are so so so so fucking beautiful",
-"I love that you're you. I wouldn't want to change the person I've gotten to know, love, laugh with, annoy, hug, kiss, and make memories with for anything."
+      "I love how your face changes when you’re excited to tell me something.",
+      "I love how you always somehow manage to make me smile even when I’m not in the mood.",
+      "I love how I can sit next to you doing absolutely nothing and still have the best time.",
+      "I love how contagious your laugh is.Matlab i just love your laugh",
+      "I love how you sometimes(Mostly) laugh at your own jokes before you've even finished telling them.",
+      "I love how dramatic you can get over the smallest things in a joking way",
+      "I love secretly watching you when you don't even know im looking like jab tum lecture le rahi hoti ho",
+      "I love how pretty you look when you're not even trying.",
+      "I love your sleepy face. Like when you get so sleepy and sleep aik dum se and wake up you look so cute",
+      "I love how cute you look when you're tired and just want to be cuddled. I really want to cuddle you",
+      "I love the way you get comfortable around me and completely let your guard down.",
+      "I love how I get to see sides of you that not everyone gets to see.",
+      "I love how you trust me with the things that matter to you.",
+      "I love knowing that you feel safe enough with me to tell me what's actually on your mind.",
+      "I love how you own being my babygirl, I love you so so much",
+      "I love the way you care about the people you love(Me obviously).",
+      "I love how protective you can get over me espessially shuru shuru me.",
+      "I love how genuinely happy you get when anything good happens to me.",
+      "I love listening to you explain things even when you have already told me those stories before.",
+      "I love our random conversations that somehow turn into hours of talking like hours and hours of talking i just love it.",
+      "I love how we can go from absolute nonsense to the deepest conversation within five minutes and then back too complete nonsense Ahmm Ahmm",
+      "I love how easily we can make each other laugh I love your smile so much.",
+      "I love our stupid inside jokes like things only we know.",
+      "I love when something happens and you're the first person I want to tell like im always dying to tell you.",
+      "I love being able to text you about the most random thing and knowing you'll entertain me.",
+      "I love how exited you get when ever i even do something small for you makes me feel like it was more than worth it.",
+      "I love when I see your name pop up on my phone.I get so excited",
+      "I love how one message from you can completely change my mood.",
+      "I love how you somehow became such a big part of my everyday life without me even realizing it. You became the best part of my life",
+      "I love how natural everything feels with you. How everythinh feels easy with you. How i just want to experience every part of life with you",
+      "I love how I never feel like I have to pretend to be someone else around you I can be my true pure self and youll love me for that.",
+      "I love that I can be completely stupid around you and you somehow still love me.",
+      "I love how you tolerate my nonsense and also reassure me through my stupid thoughts",
+      "I love how you sometimes give me that look when you know I'm being an idiot its a very sexy look.",
+      "I love your little reactions when I tease you.-Tang na kar- but Janu me apko tang kar sakta hun",
+      "I love making you blush.I love when i say somthing corny and you are like Shut up Abdullah but you enjoy that",
+      "I love when you get shy when we talk about any romantic or intimate thin that happend.",
+      "I love when you get confident and suddenly become the sassiest person alive. Sassy Abeeha is a haapy Abeeha",
+      "I love that little attitude of yours even when it drives me slightly crazy. I love everthing about it",
+      "I love how cute you are when you're annoyed with me. Like the fake annoyed asal annoyed oe meri jan nikaal ati hai",
+      "I love you Cheap flirt back",
+      "I love the feeling when we make up after being annoyed at each other. It genuinly makes me feel so close to you",
+      "I love how even our little arguments somehow remind me how much I care about you. I care about you more than anything in this world",
+      "I love when i hold you hand and feel safe just from your pressence.",
+      "I love holding you close and just forgetting about everything else for a while just fully focused on you.",
+      "I love hugging you for way longer than necessary i never want to let go of you just keep you in a hug forever.",
+      "I love resting my head against you I love resting my head on your lap, i loved resting my head on your chest.",
+      "I love having you close enough that I don't even need to say anything.",
+      "I love kissing your forehead and cheeks.",
+      "I love your cheeks so much that sometimes I genuinely just want to squish them.",
+      "I love looking at your face from really close and realizing how lucky I am to even be able to see that.",
+      "I love your eyes in literally every mood—happy, sleepy, annoyed, excited, everything.",
+      "I love your little facial expressions. I love like love your sassy sexy faical expression and when you roll down your lower lip and express sadness so cute.",
+      "I love your voice, especially when you're comfortable and just talking normally with me and obviously obviously your BABY VOICE.",
+      "I love when you're being extra cute and you don't even realize it like you are just telling a story but you get so cutie",
+      "I love how adorable you are when you're excited about metha and food.",
+      "I love planning what we're going to eat with you I love eating with you i lovee feeding you food with my hand.",
+      "I love sharing meetha with you even though I dont sahre it with anyone else.",
+      "I love going out with you without even having a proper plan just having you there is all the plan i need.",
+      "I love driving around with you and just talking about whatever comes into our heads.",
+      "I love all the little things you do for me that you probably don't even realize I notice i do notice and i really do appreciate and love you for it.",
+      "I love knowing that if I ever need someone, you will always be there for me.",
+      "I love that I can tell you when something is bothering me instead of keeping it inside and you will fix it.",
+      "I love that you can be my best friend and the person I love at the same time.",
+      "I love how much of my life I get to share with you (all of it).",
+      "I love making plans with you and then getting unnecessarily excited about them also the midnight overthinking breakdowns.",
+      "I love knowing there are still so many memories we haven't made yet i am so excited for making all those memories with you.",
+      "I love that somehow, even after all this time, I  still look at you and think, 'God, she's so fucking beautiful.' beacuse you are you are so so so so fucking beautiful",
+      "I love that you're you. I wouldn't want to change the person I've gotten to know, love, laugh with, annoy, hug, kiss, and make memories with for anything.",
+      "Screenshot this and send it to me its your turn you tell me somthing you love about me",
+      "Screenshot this and send it to me 'SNL'",
+      "Screenshot it and send it to me Share some of your favourite memories with me",
+      "Screenshot this and send it to me tables have turned i need your Looooooooooooove",
+      "Screenshot this and send it to me 'M'",
+      "Not a compliment but a request can we please please just sit down in the link one day and do the insta questions please 🥺"
+    ];
+
+    // Our Story Memories / Milestones Array
+    const milestones = [
+      { front: "Basilico by sara ✨", back: "The drive back with the slow music and the deep tallks." },
+      { front: "Boomrang day 🚗", back: "The first time we were alone and we had so many good talks and food." },
+      { front: "That night that talk", back: "Even tho i would not like to talk about it but that day i think we unlocked a new level of closeness" },
+      { front: "Late Night Talks 🌙", back: "The insta wala question are by far one of my favourite things to do." },
+      { front: "After FAR ka paper 🏡", back: "The way you came running at me after FAR ka paper is my fav memory." }
     ];
 
     const MAX_VIEWS = 7;
@@ -511,6 +709,46 @@
       heart.style.animationDuration = `${6 + Math.random() * 6}s`;
       bgHeartsContainer.appendChild(heart);
     }
+    const CORRECT_PIN = "1806"; // Set your custom 4-digit passcode here
+let enteredPin = "";
+
+function updatePinDisplay() {
+  const dots = "•".repeat(enteredPin.length) + "◦".repeat(4 - enteredPin.length);
+  document.getElementById('pinDisplay').innerText = enteredPin.length > 0 ? dots : "◦◦◦◦";
+}
+
+function pressKey(num) {
+  if (enteredPin.length < 4) {
+    enteredPin += num;
+    updatePinDisplay();
+    document.getElementById('pinError').style.display = 'none';
+  }
+}
+
+function clearKey() {
+  enteredPin = "";
+  updatePinDisplay();
+  document.getElementById('pinError').style.display = 'none';
+}
+
+function submitPin() {
+  if (enteredPin === CORRECT_PIN) {
+    document.getElementById('passcodeOverlay').style.display = 'none';
+    sessionStorage.setItem('app_unlocked', 'true');
+    triggerCelebration();
+  } else {
+    document.getElementById('pinError').style.display = 'block';
+    enteredPin = "";
+    updatePinDisplay();
+  }
+}
+
+// Auto unlock if already entered during current session
+window.addEventListener('load', () => {
+  if (sessionStorage.getItem('app_unlocked') === 'true') {
+    document.getElementById('passcodeOverlay').style.display = 'none';
+  }
+});
 
     function getStoredData() {
       const data = localStorage.getItem('love_app_data');
@@ -649,7 +887,7 @@
 
         const { favorites = [] } = getStoredData();
         bookmarkBtn.style.display = 'inline-flex';
-        bookmarkBtn.innerText = favorites.includes(currentCompliment) ? "✓ Saved!" : "❤️ Save to Favorites";
+        bookmarkBtn.innerText = favorites.includes(currentCompliment) ? "✓ Saved!" : "❤️️ Save to Favorites";
       }
     });
 
@@ -703,8 +941,28 @@
       updateUI();
     }
 
+    // Feature 5: Render Memory Flip Cards
+    function renderMilestones() {
+      const container = document.getElementById('milestonesList');
+      container.innerHTML = '';
+
+      milestones.forEach(m => {
+        const card = document.createElement('div');
+        card.className = 'flip-card';
+        card.innerHTML = `
+          <div class="flip-card-inner">
+            <div class="flip-card-front">${m.front}</div>
+            <div class="flip-card-back">${m.back}</div>
+          </div>
+        `;
+        card.addEventListener('click', () => card.classList.toggle('flipped'));
+        container.appendChild(card);
+      });
+    }
+
     const favModal = document.getElementById('favModal');
     const favList = document.getElementById('favList');
+    const milestonesModal = document.getElementById('milestonesModal');
 
     document.getElementById('openFavs').addEventListener('click', () => {
       renderFavorites();
@@ -715,6 +973,15 @@
       favModal.style.display = 'none';
     });
 
+    document.getElementById('openMilestones').addEventListener('click', () => {
+      renderMilestones();
+      milestonesModal.style.display = 'flex';
+    });
+
+    document.getElementById('closeMilestones').addEventListener('click', () => {
+      milestonesModal.style.display = 'none';
+    });
+
     window.addEventListener('load', () => {
       updateUI();
     });
@@ -723,7 +990,7 @@
 
     // PWA Setup
     const manifest = {
-      "name": "For You ❤️️",
+      "name": "For You ❤",
       "short_name": "For You",
       "start_url": "./",
       "display": "standalone",
