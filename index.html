@@ -35,9 +35,51 @@
     body {
       background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #feada6 100%);
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       padding: 16px;
+      transition: background 0.5s ease;
+    }
+
+    /* Outer Top "Need Love" Button */
+    .top-need-love-container {
+      position: fixed;
+      top: 14px;
+      z-index: 50;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .need-love-top-btn {
+      background: rgba(255, 42, 85, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      padding: 8px 18px;
+      border-radius: 24px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(255, 42, 85, 0.35);
+      transition: all 0.3s ease;
+    }
+
+    .need-love-top-btn:active {
+      transform: scale(0.92);
+    }
+
+    /* Dark Pink Theme Mode */
+    body.dark-pink-mode {
+      background: linear-gradient(135deg, #2d0a14 0%, #4a0e22 50%, #1f050d 100%);
+    }
+
+    body.dark-pink-mode .need-love-top-btn {
+      background: rgba(255, 117, 140, 0.25);
+      border-color: rgba(255, 117, 140, 0.5);
+      color: #ff758c;
     }
 
     /* Floating Background Hearts */
@@ -87,8 +129,16 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
-      max-height: 94dvh;
+      max-height: 88dvh;
       overflow-y: auto;
+      margin-top: 30px;
+      transition: all 0.5s ease;
+    }
+
+    body.dark-pink-mode .card {
+      background: rgba(45, 10, 20, 0.82);
+      border-color: rgba(255, 117, 140, 0.3);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
     }
 
     /* Top Navigation Tabs */
@@ -99,14 +149,6 @@
       width: 100%;
       margin-bottom: 16px;
       gap: 4px;
-    }
-
-    .app-title {
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: rgba(214, 40, 74, 0.8);
     }
 
     .fav-btn {
@@ -223,6 +265,60 @@
       color: #ff2a55;
     }
 
+    /* "Need Love" Special View Elements */
+    .need-love-view {
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+      width: 100%;
+      padding: 10px 0;
+    }
+
+    .need-love-mode-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: #ff758c;
+      margin-bottom: 6px;
+    }
+
+    .need-love-mode-sub {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 12px;
+    }
+
+    .need-love-btn-option {
+      background: linear-gradient(135deg, #ff2a55 0%, #b8002e 100%);
+      color: white;
+      border: 1px solid rgba(255, 117, 140, 0.4);
+      padding: 18px;
+      border-radius: 20px;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .need-love-btn-option:active {
+      transform: scale(0.95);
+    }
+
+    .long-text-body {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #2d0a14;
+      text-align: left;
+      white-space: pre-line;
+      max-height: 55vh;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
     /* Favorites & Milestones Modal */
     .modal {
       position: fixed;
@@ -230,7 +326,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.4);
+      background: rgba(0,0,0,0.5);
       backdrop-filter: blur(8px);
       z-index: 100;
       display: none;
@@ -338,11 +434,11 @@
       background: rgba(255, 42, 85, 0.25);
     }
 
-    /* 3D Flip Card Styles for Feature 5 */
+    /* Fixed Dynamic Flip Card Styles */
     .cards-stack {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
       overflow-y: auto;
       padding: 4px;
     }
@@ -350,7 +446,7 @@
     .flip-card {
       background-color: transparent;
       width: 100%;
-      height: 105px;
+      min-height: 105px;
       perspective: 1000px;
       cursor: pointer;
     }
@@ -359,9 +455,12 @@
       position: relative;
       width: 100%;
       height: 100%;
+      min-height: 105px;
       text-align: center;
       transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
       transform-style: preserve-3d;
+      display: grid;
+      grid-template-rows: 1fr;
     }
 
     .flip-card.flipped .flip-card-inner {
@@ -369,17 +468,20 @@
     }
 
     .flip-card-front, .flip-card-back {
-      position: absolute;
+      grid-area: 1 / 1;
       width: 100%;
       height: 100%;
+      min-height: 105px;
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
       border-radius: 18px;
-      padding: 14px;
+      padding: 16px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      word-break: break-word;
+      box-sizing: border-box;
     }
 
     .flip-card-front {
@@ -394,9 +496,9 @@
       background: #fff0f3;
       color: #b8002e;
       transform: rotateY(180deg);
-      font-size: 10px;
+      font-size: 13px;
       font-weight: 600;
-      line-height: 1.4;
+      line-height: 1.45;
       border: 1px solid rgba(255, 42, 85, 0.2);
     }
 
@@ -595,6 +697,11 @@
 </head>
 <body>
 
+  <!-- Need Love Button Positioned Outside Main Card at Top -->
+  <div class="top-need-love-container">
+    <button class="need-love-top-btn" id="toggleNeedLoveBtn">Need Love 💖</button>
+  </div>
+
   <!-- Passcode Lock Screen -->
   <div class="passcode-overlay" id="passcodeOverlay">
     <div class="passcode-card">
@@ -621,27 +728,39 @@
 
   <div class="bg-hearts" id="bgHearts"></div>
 
-  <div class="card">
-    <div class="top-bar">
-      <button class="fav-btn" id="openMilestones">📖 Our Story</button>
-      <button class="fav-btn" id="openTodoList">📝 To-Do</button>
-      <button class="fav-btn" id="openFavs">❤️ Saved (<span id="favCount">0</span>)</button>
+  <div class="card" id="mainCard">
+    <!-- Standard Normal UI Elements -->
+    <div id="standardAppContent" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+      <div class="top-bar">
+        <button class="fav-btn" id="openMilestones">📖 Our Story</button>
+        <button class="fav-btn" id="openTodoList">📝 To-Do</button>
+        <button class="fav-btn" id="openFavs">❤️ Saved (<span id="favCount">0</span>)</button>
+      </div>
+
+      <button class="heart-btn" id="loveBtn">Things I Love About You ❤️</button>
+      <button class="prev-btn" id="prevBtn" style="display: none;">⏮ Previous</button>
+      
+      <div class="compliment-container">
+        <div class="compliment-text" id="displayBox">Tap the heart to unlock!</div>
+      </div>
+
+      <div class="action-bar">
+        <button class="bookmark-btn" id="bookmarkBtn">❤️ Save to Favorites</button>
+      </div>
+      
+      <div class="footer-info">
+        <div class="counter" id="counterText">5 / 5 available this hour</div>
+        <div class="timer" id="timerText"></div>
+      </div>
     </div>
 
-    <button class="heart-btn" id="loveBtn">Things I Love About You ❤️</button>
-    <button class="prev-btn" id="prevBtn" style="display: none;">⏮ Previous</button>
-    
-    <div class="compliment-container">
-      <div class="compliment-text" id="displayBox">Tap the heart to unlock!</div>
-    </div>
-
-    <div class="action-bar">
-      <button class="bookmark-btn" id="bookmarkBtn">❤️️ Save to Favorites</button>
-    </div>
-    
-    <div class="footer-info">
-      <div class="counter" id="counterText">5 / 5 available this hour</div>
-      <div class="timer" id="timerText"></div>
+    <!-- Need Love Mode View -->
+    <div class="need-love-view" id="needLoveView">
+      <div class="need-love-mode-title">I'm Always Here For You 💖</div>
+      <div class="need-love-mode-sub">Pick what kind of love you need right now:</div>
+      
+      <button class="need-love-btn-option" id="btnGenuine">Genuine 🤍</button>
+      <button class="need-love-btn-option" id="btnChatpta">Chatpta 🌶️</button>
     </div>
   </div>
 
@@ -679,6 +798,17 @@
         <button class="todo-tab-btn" id="tabIntimate" onclick="switchTodoTab('intimate')">Intimate 🔥</button>
       </div>
       <div class="todo-list" id="todoListContainer"></div>
+    </div>
+  </div>
+
+  <!-- Text Popup Modal for Need Love Mode -->
+  <div class="modal" id="textPopupModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title" id="textPopupTitle">For You ❤️</div>
+        <button class="close-btn" id="closeTextPopup">✕</button>
+      </div>
+      <div class="long-text-body" id="textPopupBody"></div>
     </div>
   </div>
 
@@ -809,11 +939,11 @@
 
     // Our Story Memories / Milestones Array
     const milestones = [
-      { front: "All nighter in Islamabad ✨", back: "I was going to Murree the next day raat ko me and you were studying from there the conversation went just random talks-" },
-      { front: "Continuted...", back: "I remember I stayed up all night with you and we were talking right around the end i remember telling that i want to sit you in my lap and hug you and kiss you." },
-      { front: "Darling", back: "I remember the first time i called you any sort of a nickname was Darling i still love that word" },
-      { front: "Drive back home", back: "After you went online in dec whenever i would go to collage i would call you on the way back and just talk random stuff somtimes i would even wake you up." },
-      { front: "Talks", back: "There was a time when you would sit with me and eat food rather than watching youtube I miss that time, alot has changed." }
+      { front: "First PPE project ✨", back: "We had a  presentation to do and that the first time i talked to you alone not in a group setting I remember you-" },
+      { front: "Continuted...", back: "called me and i was making the presen-tation while you were telling me a story and life updates, it was like a 40 min call." },
+      { front: "Shalwar kameez", back: "You randomly were like Abdullah why dont you wear shalwar kameez and i remember i wore my black shalwar kameez the next day" },
+      { front: "Continued... ", back: "And when we got home you told me that it looked good and i should wear it more often from tht day i started wearing it because you appreciated it." },
+      { front: "Dolmoen ", back: "When we went to dolmoen and you were so tired you took of you dubata and the pins and left one in my car i still have that pin in my wallet." }
     ];
 
     // To-Do List Data categorized by mood
@@ -832,11 +962,211 @@
         "I want to kiss you from just below your neck till you fore head aggressively 💋",
         "Long cuddle session with no phones allowed on the backseat 🫂",
         "Sit you on my lap and hug you tightly and bury my head in your neck 💆‍♂️",
-        "Just look into your eyes for 5 mins unintrupted 🤝",
-        
+        "Just look into your eyes for 5 mins unintrupted 🤝"
       ]
     };
 
+    // Long Texts for Genuine & Chatpta Buttons
+    const genuineText = `My Janu ❤️
+
+Whenever you tap this, I want you to stop for a moment, take a deep breath, and remember one very simple thing: you are loved. More than you probably realize, more than words could ever properly explain, and more deeply than I could ever fit into a single message.
+
+I don’t think you truly understand what you have become to me. Somewhere along the way, without either of us even realizing it, you became so much more than just someone I love. You became the person my heart automatically looks for. The person I want to tell everything to. The person I want beside me when something amazing happens, and the person I want beside me when everything feels like it is falling apart.
+
+You became a part of my everyday life in such a natural way that sometimes I genuinely wonder what my days were even like before you were such a huge part of them.
+
+You are my comfort, my safe place, and one of the sweetest parts of my life. There is something about you that makes everything feel a little lighter. Even the most ordinary moments somehow become special when they involve you. A simple conversation with you can mean more to me than hours spent doing anything else. Your smile, your voice, your little ways of being yourself — somehow all of those things have become memories I want to keep forever.
+
+I hope you remember this: you don’t have to do anything extraordinary to matter to me. You being you is already more than enough.
+
+I love the way you can make an ordinary day feel unforgettable. I love the little conversations that probably seem insignificant but somehow stay in my mind. I love laughing with you over the most random things. I love those moments when we don’t even need anything exciting happening because simply having you there makes everything better.
+
+Sometimes I wish you could see yourself the way I see you. See your self from my eyes you will understand how beautiful and perfect you look to me. 
+
+If you could borrow my eyes for even a minute, I don’t think you would ever question your worth again. You would see someone incredibly special. Someone with a beautiful heart. Someone who brings warmth into people’s lives without even realizing how much of an effect they have.
+
+You would see the person who brings peace into my chaos.
+
+You would see someone I admire, someone I respect, someone I appreciate more than I can explain. Some I love more than anything. 
+
+And you would finally understand why I love you as much as I do.
+
+So whenever life becomes difficult, whenever you feel tired, overwhelmed, confused, or simply have one of those days where everything feels like too much, please remember that you don’t have to pretend to be okay all the time.
+
+You don’t have to carry everything by yourself.
+
+Main hamesha yahan hoon.
+
+Main chahta hoon ke jab bhi life tumhare liye difficult ho, tumhein ek baat hamesha yaad rahe  you will never have to face everything alone. As long as I’m here, you will always have someone who wants to listen to you, understand you, support you, laugh with you, and stand beside you through the difficult days just as much as the beautiful ones.
+
+You can tell me about the things that make you happy.
+
+You can tell me about the things that scare you.
+
+You can tell me about the smallest, most random thing that happened during your day.
+
+You can tell me absolutely nothing and simply sit there.
+
+Just be yourself.
+
+That’s the person I fell in love with.
+
+And that’s the person I will always appreciate and love.
+
+I don’t know what I did to deserve someone like you, but I know that I never want to take you for granted. I want to keep appreciating you, learning about you, understanding you, supporting you, respecting you, laughing with you, making memories with you, and being grateful for every moment that I get to have you in my life.
+
+There are so many things I could say about you, but somehow none of them ever feel like enough.
+
+I could tell you that you’re beautiful, but even that feels too small.
+
+I could tell you that you’re special, but that doesn’t explain what you mean to me.
+
+I could tell you that I love you, but even those three words don’t seem big enough for everything I feel.
+
+Because my love for you isn’t just about the big moments.
+
+It’s in the little things.
+
+It’s in remembering something you said days ago.
+
+It’s in wanting to tell you something the second it happens.
+
+It’s in smiling when I see your notifications. 
+
+It’s in thinking about the memories we’ve already made and getting excited about all the memories we haven’t made yet.
+
+It’s in wanting to be there for you when you’re happy and wanting to make things a little easier when you’re not.
+
+It’s in choosing you again and again, not because I have to, but because my heart wants to.
+
+And if I had to choose all over again…
+
+I would still choose you.
+
+I would choose you in every version of our story.
+
+I would choose every laugh.
+
+Every conversation.
+
+Every stupid little joke.
+
+Every unforgettable memory.
+
+Every difficult day that taught us something.
+
+Every ordinary day that became special simply because you were there.
+
+I would choose every version of you  the happy you, the tired you, the silly you, the emotional you, the stubborn you, the sleepy you, the excited you, and every other version in between.
+
+I would choose you. Every single time.
+
+And I hope you know that you never have to question whether you are loved.
+
+You are.
+
+So deeply.
+
+So genuinely.
+
+And in so many little ways that I probably don’t even know how to put into words.
+
+I hope life is always kind to you, but on the days when it isn’t, I hope you remember that you have someone who will always want the best for you.
+
+I hope you never lose the beautiful parts of yourself that make you who you are.
+
+I hope you continue to laugh loudly, dream endlessly, be your wonderfully imperfect self that always seems perfect to me and never let a difficult day convince you that you aren’t enough.
+
+Because you are enough you are more than enough. 
+
+You have always been enough.
+
+And to me, you will always be someone worth appreciating, protecting, respecting, and loving.
+
+No matter where life takes us, no matter how much time passes, no matter how many things change around us, I hope one thing always remains the same:
+
+how much you mean to me.
+
+I want to look back years from now and remember all the little things — the conversations we had, the things we laughed about, the memories we made, the days that felt impossible and somehow became okay, and all those tiny moments that didn’t seem important at the time but ended up becoming some of my favorite memories.
+
+Because that’s what you have become to me.
+
+A collection of beautiful memories I never want to stop adding to.
+
+So whenever you tap this, whenever you’re having a difficult day, whenever you need a reminder, or even when you’re simply missing me, read this again and remember:
+
+There is someone in this world who thinks you are incredibly special.
+
+Someone who is grateful that you exist.
+
+Someone who wants to see you happy.
+
+Someone who will always be proud of you for getting through the difficult days.
+
+Someone who wants to celebrate your happiest moments with you.
+
+Someone who appreciates you for exactly who you are.
+
+And most importantly…
+
+someone who loves you so, so much. ❤️
+
+My Janu, you are genuinely one of the most precious parts of my life, and I hope I never stop reminding you of that.
+
+If I could give you one thing, it wouldn’t be anything expensive or extraordinary.
+
+I’d give you the ability to see yourself through the eyes of the people who love you.
+
+Because then you’d finally understand just how much light you bring into the lives around you.
+
+And if you could see yourself through my eyes, even for a moment, I think you’d understand why a five-minute conversation with you can make my entire day better.
+
+Why your happiness matters so much to me.
+
+Why your sadness matters to me too.
+
+Why your little stories stay in my head.
+
+Why your smile can change my mood.
+
+Why having you in my life feels like something I should be grateful for every single day.
+
+I don’t know exactly what the future holds.
+
+I don’t know where life will take us or how many things will change along the way.
+
+But I do know that right now, in this moment, I am incredibly grateful for you.
+
+And if I had the chance to go back and choose again…
+
+I would still find my way to you.
+
+Every smile.
+Every conversation.
+Every memory.
+Every version of you.
+Every single time.
+
+I love you endlessly, Abeeha.
+
+Always have.
+
+Always will. ❤️
+
+With all my love,
+Your Janu ❤️`;
+
+    const chatptaText = `Let me remind you real quick: you are mine, and I am completely obsessed with you. Your cute baby voice, that sassy attitude, those soft squishable cheeks, and that sexy lower lip, you drive me absolutely crazy in the best way possible!
+
+I can't wait for our next drive together, holding your hand tight, teasing you until you get all blushy, and kissing your cheeks and forehead over and over again. You're my babygirl forever, I want to hug you kiss you cuddle you. I just want to be next to you. I want to hold you close, wrap my arms around you, and cuddle you until you slowly fall asleep. I want to kiss your forehead, your cheeks, and remind you how loved you are without even saying a word. I want to randomly pull you even closer in the middle of cuddling, just because no matter how close you already are, it never feels close enough.
+
+I want to feel you resting peacefully in my arms, knowing you’re safe, comfortable, and loved. I want to play with your hair, gently rub your back, and smile every time you let out those sleepy little sighs. I want us to drift off together, with you curled up against me, feeling my warmth, while I fall asleep holding you tightly.
+
+I want to lay my head on your chest look at you closely and tell you how beautiful you are remind you how much I love you. I want to kiss you so many times so many times. I want you start kissing your neck slowly move my way up to your cheeks give you aggressive kisses on your cheeks kiss you on that til right next you nose and lips. Kiss you all on your face and move to your lips I want to roll you your lower lip down slowly kiss the inside or that hold your face make a pout and start kissing you slowly. Then sit you in my lap give a tight tight hug before kissing you again this time longer slower more passionately. Every time we separate to breath I will start kissing your cheeks and then back ti kissing your lips my hands on your back and one in your hair just don’t stop kissing you. For a second pull apart and kiss your neck the top part of your chest and hug you tightly and whisper in your ears how much I love you, smell your hair smell the perfume around your neck and kiss you again slow kissing and keep kissing you till you start making the heavy breathing/kissing sounds. Once we are done kissing you still on my lap, I would wrap my hands around bury my head in your neck and take a lot of love from you I would just sit there being babied by you occasionally kissing your neck. 
+Chanda meri I love you so much I love holding your hand I love kissing you I love hugging you I love anything and everything with you. I love your conversation I love laughing with you I love eating with you I just love doing anything that involves you. 
+I love you so so much meri Janu.`;
+
+    let isNeedLoveMode = false;
     let currentTodoTab = 'romantic';
 
     // Storage Helper for Completed Checkboxes
@@ -851,7 +1181,7 @@
         completed = completed.filter(i => i !== itemText);
       } else {
         completed.push(itemText);
-        triggerCelebration(); // Confetti on ticking items!
+        triggerCelebration();
       }
       localStorage.setItem('love_app_todos', JSON.stringify(completed));
       renderTodoList();
@@ -884,6 +1214,49 @@
         container.appendChild(itemEl);
       });
     }
+
+    // Toggle "Need Love" Dark Mode Screen
+    const toggleNeedLoveBtn = document.getElementById('toggleNeedLoveBtn');
+    const standardAppContent = document.getElementById('standardAppContent');
+    const needLoveView = document.getElementById('needLoveView');
+
+    toggleNeedLoveBtn.addEventListener('click', () => {
+      isNeedLoveMode = !isNeedLoveMode;
+      document.body.classList.toggle('dark-pink-mode', isNeedLoveMode);
+
+      if (isNeedLoveMode) {
+        standardAppContent.style.display = 'none';
+        needLoveView.style.display = 'flex';
+        toggleNeedLoveBtn.innerText = 'Back to Normal 💕';
+      } else {
+        standardAppContent.style.display = 'flex';
+        needLoveView.style.display = 'none';
+        toggleNeedLoveBtn.innerText = 'Need Love 💖';
+      }
+    });
+
+    // Handle Text Popups for Genuine & Chatpta
+    const textPopupModal = document.getElementById('textPopupModal');
+    const textPopupTitle = document.getElementById('textPopupTitle');
+    const textPopupBody = document.getElementById('textPopupBody');
+
+    document.getElementById('btnGenuine').addEventListener('click', () => {
+      textPopupTitle.innerText = "Genuine Love 🤍";
+      textPopupBody.innerText = genuineText;
+      textPopupModal.style.display = 'flex';
+      triggerCelebration();
+    });
+
+    document.getElementById('btnChatpta').addEventListener('click', () => {
+      textPopupTitle.innerText = "Chatpta Love 🌶️";
+      textPopupBody.innerText = chatptaText;
+      textPopupModal.style.display = 'flex';
+      triggerCelebration();
+    });
+
+    document.getElementById('closeTextPopup').addEventListener('click', () => {
+      textPopupModal.style.display = 'none';
+    });
 
     // Modal Toggle Handlers for To-Do List
     const todoModal = document.getElementById('todoModal');
@@ -1219,8 +1592,15 @@
 
     if ('serviceWorker' in navigator) {
       const swCode = `
-        const CACHE_NAME = 'app-cache-v3';
+        const CACHE_NAME = 'app-cache-v4';
         self.addEventListener('install', e => self.skipWaiting());
+        self.addEventListener('activate', e => {
+          e.waitUntil(
+            caches.keys().then(keys => Promise.all(
+              keys.map(key => key !== CACHE_NAME ? caches.delete(key) : null)
+            )).then(() => self.clients.claim())
+          );
+        });
         self.addEventListener('fetch', e => e.respondWith(fetch(e.request).catch(() => caches.match(e.request))));
       `;
       const swBlob = new Blob([swCode], { type: 'application/javascript' });
@@ -1231,4 +1611,3 @@
   </script>
 </body>
 </html>
-
