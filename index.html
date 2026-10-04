@@ -71,16 +71,24 @@
       transform: scale(0.92);
     }
 
-    /* Dark Pink Theme Mode */
-    body.dark-pink-mode {
-      background: linear-gradient(135deg, #2d0a14 0%, #4a0e22 50%, #1f050d 100%);
-    }
+    /* Fix Mobile Dark Pink Theme Mode */
+body.dark-pink-mode {
+  background: linear-gradient(135deg, #2d0a14 0%, #4a0e22 50%, #1f050d 100%) !important;
+  background-attachment: fixed !important;
+  background-size: cover !important;
+}
 
-    body.dark-pink-mode .need-love-top-btn {
-      background: rgba(255, 117, 140, 0.25);
-      border-color: rgba(255, 117, 140, 0.5);
-      color: #ff758c;
-    }
+/* Dim & Darken Floating Hearts on Mobile in Dark Mode */
+body.dark-pink-mode .bg-heart {
+  opacity: 0.18 !important;
+  filter: brightness(0.5) drop-shadow(0 0 5px rgba(255, 42, 85, 0.4)) !important;
+}
+
+body.dark-pink-mode .need-love-top-btn {
+  background: rgba(255, 117, 140, 0.25) !important;
+  border-color: rgba(255, 117, 140, 0.5) !important;
+  color: #ff758c !important;
+}
 
     /* Floating Background Hearts */
     .bg-hearts {
@@ -496,7 +504,7 @@
       background: #fff0f3;
       color: #b8002e;
       transform: rotateY(180deg);
-      font-size: 13px;
+      font-size: 10px;
       font-weight: 600;
       line-height: 1.45;
       border: 1px solid rgba(255, 42, 85, 0.2);
@@ -934,17 +942,24 @@
       "I loved calling you mine tho i have stopped due to reasons beyond my understanding but that was one the first thing i used to say to you.",
       "I love how i have this one side of me that is purely just visible to you no one on the earth knows about it other than you.",
       "I love when you call me any nickname its fun to hear please do it more often",
-      "I love how much I love you (Im not retarded i just dont know how to explain this)"
+      "I love how much I love you (Im not retarded i just dont know how to explain this)",
+      "I love you for you",
+      "I love when you start one story and telling 5 others in the middle",
+      "I love when you how you dont tell a story not in a short way but the long way and so enthusiastically ",
+      "I love how playful you get randomly how just aik dum se you get exited over somthing jo randomly dimag me ai",
+      "I love how you constantly keep teaching me about how a womens mind works so i know how to best treat you or and other women in my life",
+      "I love how you keep telling me about womens cycle so i can know how things work and make sure women around me are taken care of",
+      "I love that i can truly discuss any top with you, like right now as im writing this we are dicussing faimly planning",
+      "Whats somthing about this bond that you really love that is really special like if this bond were to finish what is something you feel like you wont find anywhere else"
     ];
 
     // Our Story Memories / Milestones Array
     const milestones = [
-      { front: "First PPE project ✨", back: "We had a  presentation to do and that the first time i talked to you alone not in a group setting I remember you-" },
-      { front: "Continuted...", back: "called me and i was making the presen-tation while you were telling me a story and life updates, it was like a 40 min call." },
-      { front: "Shalwar kameez", back: "You randomly were like Abdullah why dont you wear shalwar kameez and i remember i wore my black shalwar kameez the next day" },
-      { front: "Continued... ", back: "And when we got home you told me that it looked good and i should wear it more often from tht day i started wearing it because you appreciated it." },
-      { front: "Dolmoen ", back: "When we went to dolmoen and you were so tired you took of you dubata and the pins and left one in my car i still have that pin in my wallet." }
-    ];
+{ front: "Flower 💮", back: "When I gave you a flower for the first time and you got so happy and so excited and started taking pictures with it was so heartwarming" },
+      { front: "Multan ⛳", back: "As much as Multan was memorable I'm not talking about it right now, the part from Multan that is very close to my heart is when I was playing my tournament." },
+      { front: "Continued...", back: " and I was talking to you in between and you kept making dua for me even though you don't know anything about golf and I went on to win that match and sharing that with you was very special" },
+      { front: "Dolmen 🏢", back: "I remember walking around the mall together and when we came back you told me you wanted to hold my arm and walk. I don't remember quite well if I expressed it properly-." },
+      { front: "Continued...", back: " or not but I also really wanted to hold your hand and walk around I also really wanted to try some clothes on and have your opinion on them I have been wanting this for a long time now." }    ];
 
     // To-Do List Data categorized by mood
     const todoData = {
@@ -962,7 +977,8 @@
         "I want to kiss you from just below your neck till you fore head aggressively 💋",
         "Long cuddle session with no phones allowed on the backseat 🫂",
         "Sit you on my lap and hug you tightly and bury my head in your neck 💆‍♂️",
-        "Just look into your eyes for 5 mins unintrupted 🤝"
+        "Just look into your eyes for 5 mins unintrupted 🤝",
+        "Lay my head on your lap and have your hand moving in my hair"
       ]
     };
 
